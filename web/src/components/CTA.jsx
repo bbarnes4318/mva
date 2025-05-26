@@ -1,0 +1,33 @@
+const CTA = () => (
+  <section className="cta-section" style={{ background: 'linear-gradient(90deg, #2563eb 0%, #00eaff 100%)', color: '#fff', borderRadius: 18, boxShadow: '0 4px 24px 0 rgba(60,72,88,0.10)', width: '100%', margin: '0 auto', padding: '4rem 2rem', textAlign: 'center', maxWidth: 'none' }}>
+    <div style={{ background: '#22c55e', color: '#fff', fontWeight: 900, fontSize: '1.09rem', padding: '0.7rem 1.6rem', borderRadius: 999, boxShadow: '0 4px 18px 0 rgba(34,197,94,0.13)', letterSpacing: 0.2, display: 'inline-block', marginBottom: 28, border: '2.5px solid #fff', borderBottom: '4px solid #16a34a' }}>
+      No Win, No Fee. 100% Free.
+    </div>
+    <h2 style={{ color: '#fff', fontWeight: 900, fontSize: '2.1rem', marginBottom: 18, textShadow: '0 2px 12px rgba(37,99,235,0.18)' }}>
+      Ready to get the compensation you deserve?
+    </h2>
+    <p style={{ color: '#e3eafc', fontSize: '1.13rem', marginBottom: 38 }}>
+      Take the first step toward justice. Our team is ready to fight for you—no fees unless we win your case.
+    </p>
+    <button className="cta-main-big cta-green-btn" style={{ background: '#22c55e', color: '#fff', fontWeight: 900, fontSize: '1.18rem', padding: '1.2rem 2.8rem', borderRadius: 999, border: 'none', marginBottom: 22, boxShadow: '0 6px 32px 0 rgba(34,197,94,0.18)' }} onClick={() => {
+      const el = document.getElementById('eligibility-form');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }}>
+      Start My Free Case Review
+    </button>
+    <div style={{ marginTop: 10 }}>
+      <a href="tel:18883172922" style={{ background: '#fff', color: '#2563eb', fontWeight: 800, fontSize: '1.08rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6, borderRadius: 999, padding: '0.8rem 1.7rem', boxShadow: '0 2px 8px 0 rgba(37,99,235,0.13)', border: '2px solid #fff' }}>
+        <span role="img" aria-label="Phone">📞</span> 1-888-317-2922
+      </a>
+    </div>
+    <style>{`
+      .cta-green-btn:hover {
+        transform: scale(1.04);
+        background: #16a34a;
+        box-shadow: 0 10px 36px 0 rgba(34,197,94,0.22);
+      }
+    `}</style>
+  </section>
+);
+
+export default CTA; 

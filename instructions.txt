@@ -1,0 +1,3 @@
+Your job is to copy the website at the following URL and code it fully so that we can use the same exact style with different copy: 
+
+https://huggingface.co/spaces/vergaraale/justicia-legal
