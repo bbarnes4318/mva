@@ -23,7 +23,7 @@ function getInitials(name) {
 }
 
 const Testimonials = () => (
-  <section className="testimonials-section">
+  <section className="testimonials-section" id="testimonials">
     <h2 className="testimonials-title">What our clients say</h2>
     <div className="testimonials-cards-row">
       {testimonials.map((t, idx) => (

@@ -1,12 +1,12 @@
 const CTA = () => (
-  <section className="cta-section" style={{ background: 'linear-gradient(90deg, #2563eb 0%, #00eaff 100%)', color: '#fff', borderRadius: 18, boxShadow: '0 4px 24px 0 rgba(60,72,88,0.10)', width: '100%', margin: '0 auto', padding: '4rem 2rem', textAlign: 'center', maxWidth: 'none' }}>
+  <section className="cta-section" style={{ background: 'linear-gradient(90deg, #e3eafc 0%, #60a5fa 60%, #22c55e 100%)', color: '#1746a2', borderRadius: 22, boxShadow: '0 8px 32px 0 rgba(37,99,235,0.13)', width: '100%', margin: '0 auto', padding: '4rem 2rem', textAlign: 'center', maxWidth: 'none', border: '4px solid #fff', boxSizing: 'border-box', outline: '3px solid #e3eafc', outlineOffset: '-10px' }}>
     <div style={{ background: '#22c55e', color: '#fff', fontWeight: 900, fontSize: '1.09rem', padding: '0.7rem 1.6rem', borderRadius: 999, boxShadow: '0 4px 18px 0 rgba(34,197,94,0.13)', letterSpacing: 0.2, display: 'inline-block', marginBottom: 28, border: '2.5px solid #fff', borderBottom: '4px solid #16a34a' }}>
       No Win, No Fee. 100% Free.
     </div>
-    <h2 style={{ color: '#fff', fontWeight: 900, fontSize: '2.1rem', marginBottom: 18, textShadow: '0 2px 12px rgba(37,99,235,0.18)' }}>
+    <h2 style={{ color: '#102040', fontWeight: 900, fontSize: '2.1rem', marginBottom: 18, textShadow: '0 2px 8px #fff8' }}>
       Ready to get the compensation you deserve?
     </h2>
-    <p style={{ color: '#e3eafc', fontSize: '1.13rem', marginBottom: 38 }}>
+    <p style={{ color: '#1746a2', fontSize: '1.13rem', marginBottom: 38, fontWeight: 600, textShadow: '0 1px 4px #fff8' }}>
       Take the first step toward justice. Our team is ready to fight for you—no fees unless we win your case.
     </p>
     <button className="cta-main-big cta-green-btn" style={{ background: '#22c55e', color: '#fff', fontWeight: 900, fontSize: '1.18rem', padding: '1.2rem 2.8rem', borderRadius: 999, border: 'none', marginBottom: 22, boxShadow: '0 6px 32px 0 rgba(34,197,94,0.18)' }} onClick={() => {

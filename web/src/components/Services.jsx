@@ -1,5 +1,5 @@
 const Services = () => (
-  <section className="services">
+  <section className="services" id="services">
     <h2>How we can help you</h2>
     <div className="services-cards">
       <div className="service-card">

@@ -28,7 +28,7 @@ const steps = [
 ];
 
 const Process = () => (
-  <>
+  <section className="process" id="process">
     <div style={{ background: '#22c55e', color: '#fff', fontWeight: 900, fontSize: '1.09rem', padding: '0.7rem 1.6rem', borderRadius: 999, boxShadow: '0 4px 18px 0 rgba(34,197,94,0.13)', letterSpacing: 0.2, textAlign: 'center', margin: '0 auto 2.7rem auto', maxWidth: 340, border: '2.5px solid #fff', borderBottom: '4px solid #16a34a' }}>
       No Win, No Fee Guarantee
     </div>
@@ -47,7 +47,7 @@ const Process = () => (
         </div>
       ))}
     </div>
-  </>
+  </section>
 );
 
 export default Process; 

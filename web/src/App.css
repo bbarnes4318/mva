@@ -1,18 +1,99 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Roboto:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
 
-body, p, span, li, input, textarea, button {
-  font-family: 'Roboto', Arial, Helvetica, sans-serif !important;
-}
-h1, h2, h3, h4, h5, h6, .hero-headline, .testimonials-title, .section-title, .eligibility-form-title, .process-title, .footer-logo {
-  font-family: 'Poppins', Arial, sans-serif !important;
+html, body, p, span, li, input, textarea, button, h1, h2, h3, h4, h5, h6, .hero-headline, .testimonials-title, .section-title, .eligibility-form-title, .process-title, .footer-logo {
+  font-family: 'Inter', Arial, Helvetica, sans-serif !important;
+  color: #1a2236;
 }
 
 body {
   margin: 0;
-  font-family: 'Montserrat', Arial, sans-serif;
-  background: #f5f7fa;
-  color: #222;
-  overflow-x: hidden;
+  background: #f7fafd;
+  color: #1a2236;
+  font-size: 1.08rem;
+  line-height: 1.6;
+}
+
+.section, .main-content, .card, .footer-main, .navbar, .cta-section, .testimonials-section, .process, .services, .contact-section {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px 0 rgba(60,72,88,0.08);
+  margin-bottom: 2.5rem;
+  padding: 2.5rem 2rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 900;
+  color: #1746a2;
+  margin-bottom: 1.2rem;
+}
+
+a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+a:hover {
+  color: #1746a2;
+}
+
+button, .hero-cta, .cta-main, .cta-secondary, .contact-form button {
+  font-family: 'Inter', Arial, Helvetica, sans-serif !important;
+  font-weight: 800;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #2563eb 0%, #00eaff 100%);
+  color: #fff;
+  border: none;
+  padding: 1rem 2.2rem;
+  box-shadow: 0 2px 8px 0 rgba(37,99,235,0.13);
+  margin: 0.5rem 0;
+  transition: background 0.2s, color 0.2s;
+}
+button:hover, .hero-cta:hover, .cta-main:hover, .cta-secondary:hover, .contact-form button:hover {
+  background: linear-gradient(90deg, #1746a2 0%, #2563eb 100%);
+  color: #fff;
+}
+
+.footer-main {
+  background: linear-gradient(90deg, #e3eafc 0%, #60a5fa 100%);
+  color: #1a2236;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 2.5rem 1rem 1.2rem 1rem;
+}
+
+.footer-logo img {
+  height: 180px !important;
+  filter: drop-shadow(0 2px 8px #2563eb33);
+}
+
+.footer-bottom {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #1746a2;
+  text-align: center;
+  letter-spacing: 0.01em;
+  padding: 1.2rem 0 0.2rem 0;
+  background: none;
+  border-top: 1px solid #e3eafc;
+}
+
+.navbar {
+  background: #fff;
+  box-shadow: 0 2px 8px 0 rgba(60,72,88,0.06);
+  border-radius: 0 0 18px 18px;
+  padding: 0.5rem 0;
+}
+
+.hero-bg {
+  background: linear-gradient(120deg, #f7fafc 60%, #e3eafc 100%);
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 0 6rem 0;
+  border-radius: 18px;
 }
 
 .site-wrapper {
@@ -27,39 +108,6 @@ body {
   width: 100%;
   padding: 0 1.5rem;
   box-sizing: border-box;
-}
-
-a {
-  color: #1976d2;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-a:hover {
-  color: #0d47a1;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: inherit;
-  font-weight: 700;
-  margin: 0 0 0.5em 0;
-}
-
-button {
-  font-family: inherit;
-  font-size: 1rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-}
-
-.app-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: #f5f7fa;
-  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 .header {
@@ -391,13 +439,14 @@ button {
   margin-bottom: 1.3rem;
   margin-top: 1.2rem;
   line-height: 1.08;
-  color: #fff;
+  color: #1a2236 !important;
+  text-shadow: 0 2px 12px rgba(37,99,235,0.08);
   text-align: left;
 }
 
 .hero-subheadline {
   font-size: 1.08rem;
-  color: #e3eafc;
+  color: #2563eb !important;
   font-weight: 400;
   margin-bottom: 2.7rem;
   letter-spacing: 0.1px;
@@ -1012,12 +1061,11 @@ button {
 }
 
 .footer-main {
-  background: linear-gradient(120deg, #0a1837 80%, #2563eb 100%);
-  color: #fff;
+  background: linear-gradient(90deg, #e3eafc 0%, #60a5fa 100%);
+  color: #1a2236;
+  border-radius: 0;
+  box-shadow: none;
   padding: 2.5rem 1rem 1.2rem 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .footer-content {
@@ -1335,12 +1383,13 @@ button, .hero-cta, .hero-phone-btn, .eligibility-yes, .eligibility-no, .cta-main
 }
 
 .hero-bg {
-  background: linear-gradient(120deg, #0a1837 80%, #2563eb 100%), url('/hero-bg.jpg') center/cover no-repeat;
+  background: linear-gradient(120deg, #f7fafc 60%, #e3eafc 100%);
   min-height: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 5rem 0 6rem 0;
+  border-radius: 18px;
 }
 
 .process-horizontal {
@@ -1492,6 +1541,7 @@ button, .hero-cta, .hero-phone-btn, .eligibility-yes, .eligibility-no, .cta-main
   margin-left: 2.5rem;
   border-radius: 18px;
   box-shadow: 0 8px 32px 0 rgba(25,99,235,0.10);
+  background: transparent !important;
 }
 .trust-badges {
   display: flex;
@@ -1574,4 +1624,29 @@ button, .hero-cta, .hero-phone-btn, .eligibility-yes, .eligibility-no, .cta-main
   .sticky-cta-btn {
     display: block;
   }
+}
+
+.footer-bottom {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+  text-align: center;
+  letter-spacing: 0.01em;
+  padding: 0.7rem 0 0.2rem 0;
+}
+
+.footer-logo-img {
+  max-height: 250px;
+  width: auto;
+  display: block;
+}
+@media (max-width: 700px) {
+  .footer-logo-img {
+    max-height: 120px;
+  }
+}
+.hero-image {
+  background: transparent !important;
+  box-shadow: 0 8px 32px 0 rgba(25,99,235,0.10);
+  border-radius: 18px;
 }
