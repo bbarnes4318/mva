@@ -6,7 +6,7 @@
 // - public/badge-avvo.png (Avvo Rating badge)
 
 import { useContext } from 'react';
-import { LanguageContext } from '../language';
+import { LanguageContext } from '../language.jsx';
 
 const badgeStyle = {
   fontWeight: 800,
@@ -83,7 +83,7 @@ const Hero = () => {
             </div>
           </div>
         </div>
-        <img className="hero-image" src="/hero-justice.png" alt="Justice Illustration" style={{ maxWidth: 340, width: '100%', minWidth: 180, flex: 1, margin: '0 auto', objectFit: 'contain', borderRadius: 18, boxShadow: '0 8px 32px 0 rgba(25,99,235,0.10)' }} />
+        <img className="hero-image" src="hero-justice.png" alt="Justice Illustration" style={{ maxWidth: 340, width: '100%', minWidth: 180, flex: 1, margin: '0 auto', objectFit: 'contain', borderRadius: 18, boxShadow: '0 8px 32px 0 rgba(25,99,235,0.10)' }} />
       </div>
       <style>{`
         .hero-green-cta:hover {

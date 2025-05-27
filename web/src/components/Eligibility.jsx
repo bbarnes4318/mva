@@ -1,5 +1,5 @@
 import { useState, useRef, useContext } from 'react';
-import { LanguageContext } from '../language';
+import { LanguageContext } from '../language.jsx';
 
 const Eligibility = () => {
   const { t } = useContext(LanguageContext);

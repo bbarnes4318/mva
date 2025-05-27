@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { LanguageContext } from '../language';
+import { LanguageContext } from '../language.jsx';
 
 const Services = () => {
   const { t } = useContext(LanguageContext);

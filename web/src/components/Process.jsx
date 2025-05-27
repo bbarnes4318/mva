@@ -1,5 +1,5 @@
 import { useEffect, useRef, useContext } from "react";
-import { LanguageContext } from '../language';
+import { LanguageContext } from '../language.jsx';
 
 const Process = () => {
   const { t } = useContext(LanguageContext);

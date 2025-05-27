@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { LanguageContext } from '../language';
+import { LanguageContext } from '../language.jsx';
 
 const Navbar = () => {
   const { language, setLanguage, t } = useContext(LanguageContext);

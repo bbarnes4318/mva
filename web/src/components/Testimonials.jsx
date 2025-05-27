@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { LanguageContext } from '../language';
+import { LanguageContext } from '../language.jsx';
 
 const testimonials = [
   {
@@ -7,7 +7,7 @@ const testimonials = [
       en: 'After the accident, I was confused and scared. JusticiaLegal helped me get the compensation I deserved.',
       es: 'Después del accidente, estaba confundido y asustado. JusticiaLegal me ayudó a obtener la compensación que merecía.'
     },
-    name: 'James D.',
+    name: 'María G.',
     location: 'Phoenix, AZ'
   },
   {
@@ -15,16 +15,16 @@ const testimonials = [
       en: 'I never thought it would turn out positive, but the team was amazing and kept me informed every step of the way.',
       es: 'Nunca pensé que saldría bien, pero el equipo fue increíble y me mantuvo informado en cada paso.'
     },
-    name: 'Sarah M.',
-    location: 'Atlanta, GA'
+    name: 'José L.',
+    location: 'Tucson, AZ'
   },
   {
     text: {
       en: 'The legal team kept giving me updates and fought for every dollar I deserved.',
       es: 'El equipo legal me mantuvo informado y luchó por cada dólar que merecía.'
     },
-    name: 'Thomas L.',
-    location: 'Dallas, TX'
+    name: 'Ana M.',
+    location: 'El Paso, TX'
   }
 ];
 
