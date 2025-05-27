@@ -12,7 +12,9 @@ const Footer = () => {
             <a href="#services">{t('footer.services')}</a><br />
             <a href="#process">{t('footer.process')}</a><br />
             <a href="#testimonials">{t('footer.testimonials')}</a><br />
-            <a href="#contact">{t('footer.contact')}</a>
+            <a href="#contact">{t('footer.contact')}</a><br />
+            <a href="/privacy" style={{ color: '#2563eb', fontWeight: 700 }}>Privacy Policy</a><br />
+            <a href="/terms" style={{ color: '#2563eb', fontWeight: 700 }}>Terms & Conditions</a>
           </div>
           <div><strong>{t('footer.hours')}</strong><br />{t('footer.monfri')}<br />{t('footer.sat')}<br />{t('footer.sun')}</div>
         </div>

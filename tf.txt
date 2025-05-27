@@ -1,0 +1,1807 @@
+TrustedForm Certify
+Verify your marketing domains in My Account (requires admin privileges)
+Implement the Web SDK by copying the Javascript Snippet below and adding it to your form page
+Submit a test and the Trustedform Certificate URL will be submitted with your form data
+View the TrustedForm Certificate URL in a browser
+Confirm that the session replay matches your expectations and recorded information looks accurate
+If you also want to retain these certificates to use them as evidence, enable the Auto-Retain feature below or retain certificates via the API
+
+Script Configurations
+
+Field
+xxTrustedFormCertUrl
+(Recommended)
+Javascript Snippet (Web SDK)
+<!-- TrustedForm -->
+<script type="text/javascript">
+  (function() {
+    var tf = document.createElement('script');
+    tf.type = 'text/javascript';
+    tf.async = true;
+    tf.src = ("https:" == document.location.protocol ? 'https' : 'http') +
+      '://api.trustedform.com/trustedform.js?field=xxTrustedFormCertUrl&use_tagged_consent=true&l=' +
+      new Date().getTime() + Math.random();
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(tf, s);
+  })();
+</script>
+<noscript>
+  <img src='https://api.trustedform.com/ns.gif' />
+</noscript>
+<!-- End TrustedForm -->
+
+How it works
+The script will generate a certificate and insert a hidden form field into every form on the page. The value of that field will contain the URL to the certificate. Just pass that new form field along with all the other lead data. Anyone who gets the lead data will also get the certificate URL.
+
+Authentication
+Unless otherwise noted, all calls to resources exposed by the ActiveProspect APIs require authentication. The APIs use HTTP Basic Authentication. In place of the password, use your account API key. The username is ignored so you can provide whatever value you like. This documentation uses API as the username.
+
+Example
+Throughout this documentation you will see examples that look similar to that shown below. This examples uses the ubiquitous curl shell command. The -uX:1234567890 portion of that command specifies the HTTP Basic Authentication credentials. In this example X is the username and 1234567890 is the API key.
+
+$ curl -X GET -uX:1234567890 -H 'Accept: application/json' https://app.leadconduit.com/flows
+If the -u argument is omitted from an example, you may assume that it does not require authentication.
+
+Failure to Authenticate
+When you fail to provide the correct HTTP Basic Auth credentials, you will receive an HTTP 401 (Unauthorized) response that looks like this:
+
+HTTP/1.1 401 Unauthorized
+Date: Tue, 28 Jul 2015 03:29:16 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 33
+Connection: keep-alive
+Vary: Accept, Accept-Encoding
+ETag: W/"21-48c58abe"
+
+{"error":"authentication failed"}
+API Key
+Your API key is used to authenticate all calls to the API. This key is private. Treat it like a password. Only give it out to people you trust. Your API key works with all ActiveProspect products to which you are subscribed. You can retrieve your API key via the ActiveProspect ID account settings.
+
+Resetting your API key
+You can reset your API key via your ActiveProspect ID account settings. After you have reset it, you must propagate the new key to each of the ActiveProspect products to which you are subscribed by logging into them in turn. The act of logging in to a product causes the key to propagate to that product. Once you reset the API key in your ActiveProspect ID account settings, and log into a product your old key will immediately stop working and your new key will start working.
+
+Certificate URL
+Each Certificate URL acts as the endpoint to a simple RPC API. The HTTP methods listed in this section are used to interact with an individual certificate. Certificate URLs follow a common format, though the format of a certificate ID depends on how the certificate was issued.
+
+https://cert.trustedform.com/eb9fc4dd9bed9ad451a5648946cf4bf09b5bb947
+Run Certificate Operations
+The TrustedForm Certificate API is able to perform multiple operations based on the parameters sent in the request. Each operation is demonstrated in the request body documentation. The overall outcome of the operations is revealed by the outcome property. Best practice is to base your purchase decision on this property.
+
+Separate documentation about the parameters and results of each operation is available in the Operations reference. and can be used alone or in tandem with another operation. The match_lead operation is required when running the retain operation.
+
+Introduction of TrustedForm Certificate API v4.0
+Security
+Basic
+Request
+path Parameters
+cert_id
+required
+string <= 255 characters
+The certificate ID format varies depending on the type of certificate. Certificate ID length will not exceed 255 characters.
+
+Example: eb9fc4dd9bed9ad451a5648946cf4bf09b5bb947
+header Parameters
+Content-Type
+required
+string
+application/json
+
+Api-Version	
+string
+If your account is configured to use an earlier api-version,
+optionally include this header to override the
+
+default behavior and force usage of v4.0. Defaults to your currently
+configured API version, visible in
+[your settings](https://app.trustedform.com/settings).
+Example: 4.0
+Request Body schema: application/json
+optional
+match_lead	
+MatchLeadEmailParameters (object) or MatchLeadPhoneParameters (object) or MatchLeadPhoneEmailParameters (object) (MatchLeadParameters)
+retain	
+object (RetainParameters)
+Though both `retain` parameters are optional, we strongly recommend
+using them. Doing so will record additional
+
+metadata on your stored certificate which is often of use down the road.
+insights	
+object (InsightsParameters)
+Request individual Insights data points (`properties`) to be returned
+and terms for which to scan for in a certificate session replay.
+verify	
+object (VerifyParameters)
+The advertiser_name parameter is optional but is required to populate the one_to_one property.
+
+The advertiser_name parameter only applies to the One to One Consent value (returned as one_to_one). It has no effect on any other values returned by the Verify call.
+
+The min_font_size_px_required, min_contrast_ratio_required, and opt_in_types_allowed parameters are optional.
+
+Responses
+200OK
+400Bad Request
+401Incorrect API key
+402Account is inactive or out of funds
+403Uavailable operation requested
+404TrustedForm certificate has expired or could not be found
+405Attempted to claim a 'sandboxed' certificate
+422Unprocessable Entity
+post
+/{cert_id}
+Try it
+Request samples
+Payload
+curl
+Node.js
+Ruby
+application/json
+CopyExpand allCollapse all
+{
+"match_lead": {
+"email": "janedoe@gmail.com"
+},
+"retain": {
+"reference": "1128238382829",
+"vendor": "Acme Co."
+},
+"insights": {
+"properties": [
+"seconds_on_page",
+"domain",
+"bot_detected",
+"ip",
+"approx_ip_geo",
+"browser",
+"age_seconds",
+"created_at",
+"expires_at",
+"form_input_method",
+"form_input_kpm",
+"form_input_wpm",
+"is_framed",
+"is_masked",
+"num_sensitive_content_elements",
+"num_sensitive_form_elements",
+"page_url",
+"parent_page_url",
+"os"
+],
+"scans": {
+"forbidden": [
+"free",
+"ipad"
+],
+"required": [
+"home security system"
+]
+}
+},
+"verify": {
+"advertiser_name": "Acme Inc.",
+"min_contrast_ratio_required": 7,
+"min_font_size_px_required": 16,
+"opt_in_types_allowed": [
+"manual",
+"pre-selected",
+"non-interactive"
+]
+}
+}
+Response samples
+200
+400
+401
+402
+403
+
+3 more
+3 more
+application/json
+CopyExpand allCollapse all
+{
+"outcome": "success",
+"reason": "null",
+"match_lead": {
+"email": "janedoe@gmail.com",
+"phone": "51125551212",
+"result": {
+"email_match": true,
+"phone_match": true,
+"success": true
+}
+},
+"retain": {
+"reference": "1128238382829",
+"result": {
+"expires_at": "2023-07-18T12:03:52Z",
+"masked_cert_url": "string",
+"previously_retained": "false"
+},
+"vendor": "Acme Co."
+},
+"insights": {
+"properties": {
+"age_seconds": 76287,
+"approx_ip_geo": {
+"city": "Dallas",
+"country_code": "US",
+"lat": 32.7451,
+"lon": -96.8038,
+"postal_code": "75203",
+"state": "Texas",
+"time_zone": "America/Chicago"
+},
+"bot_detected": false,
+"browser": {
+"full": "Chrome 128.0.0.0",
+"name": "Chrome",
+"user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+"version": {
+"full": "128.0.0.0",
+"major": "128",
+"minor": "0",
+"patch": "0"
+}
+},
+"created_at": "2024-09-18T17:07:09Z",
+"domain": "example.com",
+"expires_at": "2024-12-20T17:07:09Z",
+"form_input_kpm": 234.92560689115115,
+"form_input_method": [
+"typing"
+],
+"form_input_wpm": 47.355958958168905,
+"ip": "192.168.0.1",
+"is_framed": false,
+"is_masked": false,
+"num_sensitive_content_elements": 0,
+"num_sensitive_form_elements": 0,
+"os": {
+"full": "Mac OS X 10.15.7",
+"is_mobile": false,
+"name": "Mac OS X",
+"version": {
+"full": "10.15.7",
+"major": "10",
+"minor": "15",
+"patch": "7"
+}
+},
+"page_url": "https://www.example.com/contact.html",
+"parent_page_url": null,
+"seconds_on_page": 1129
+},
+"scans": {
+"forbidden": [
+"free"
+],
+"required": [
+"offer"
+],
+"result": {
+"forbidden": {
+"found": [ ],
+"not_found": [
+"free"
+]
+},
+"required": {
+"found": [ ],
+"not_found": [
+"offer"
+]
+},
+"success": false
+}
+}
+},
+"verify": {
+"advertiser_name": "Acme Inc.",
+"languages": [
+{
+"text": "By clicking on the 'Get Rates' button below, I consent to be contacted"
+}
+],
+"min_contrast_ratio_required": 7,
+"min_font_size_px_required": 16,
+"opt_in_types_allowed": [
+"manual",
+"pre-selected",
+"non-interactive"
+],
+"result": {
+"form_submitted": true,
+"language_approved": true,
+"min_contrast_ratio_satisfied": true,
+"min_font_size_px_satisfied": true,
+"one_to_one": true,
+"opt_in_types_satisfied": true,
+"success": true
+}
+}
+}
+Next to Match Lead
+
+Match Lead
+The match_lead operation allows you to check whether the email address and/or phone number of the lead you have against what is recorded on the certificate.
+
+Before being converted to a hash to be stored email addresses and phone numbers are normalized. Email addresses are simply downcased while phone numbers remove all whitespace, hyphens, brackets and parentheses. This normalization is also applied to the values of lead matching parameters to help legitimate matches be made when the formatting is different.
+
+Important: The match_lead operation is required when running the retain operation.
+
+MatchLeadParameters
+Any of:MatchLeadEmailParametersMatchLeadPhoneParametersMatchLeadPhoneEmailParameters
+Match certificate to the lead based on the lead email address
+
+email
+required
+string
+The email of the consumer you believe was recorded in the certificate. Optionally you can hash the value using a SHA1 hash function in place of providing the unhashed value
+
+
+MatchLeadEmailParameters
+MatchLeadEmailParameters
+Copy
+{
+"email": "janedoe@gmail.com"
+}
+MatchLeadResult
+The result of the match_lead operation. The email and phone parameters are echoed and the result property reports the outcome of the operation. More information is available in our KB.
+
+If the operation result is not a success, TrustedForm was unable to confirm that the consumer information collected on the cert matches the lead it came with. This is a strong signal that the lead should not be contacted.
+
+The result of the match_lead operation does not impact the behavior of the retain operation.
+
+email	
+string
+The email or hashed value provided in the request, believed to be that of the consumer recorded in the certificate.
+
+phone	
+string
+The phone number or hashed value provided in the request, believed to be that of the consumer recorded in the certificate.
+
+result	
+object
+CopyExpand allCollapse all
+{
+"email": "janedoe@gmail.com",
+"phone": "51125551212",
+"result": {
+"email_match": true,
+"phone_match": true,
+"success": true
+}
+}
+Next to Retain
+
+Retain
+The retain operation stores a TrustedForm certificate in your account per your account retention setting (defaults to 5 years). This should be performed for all certificates associated with leads you intend to contact so that you have proof of the events that took place.
+
+Important: When retaining a certificate, you must also execute the match_lead operation. This ensures that the lead with which you received the certificate matches the lead data collected on the cert.
+
+Requires a Self-Service plan or higher.
+
+RetainParameters
+Though both `retain` parameters are optional, we strongly recommend
+using them. Doing so will record additional
+
+metadata on your stored certificate which is often of use down the road.
+reference	
+string
+Any text that may help you identify the lead associated with the certificate such as a unique lead identifier or URL pointing to the lead in another system. This value will be displayed in your copy of the certificate for your future reference
+
+vendor	
+string
+When retaining a certificate, you can optionally pass the vendor name. This is intended for tracking the name of the company that provided the lead associated with the certificate. TrustedForm will record this value on the certificate stored in your account. Other accounts cannot see this value. When you use TrustedForm reporting, you can easily filter or group by vendor.
+
+Copy
+{
+"reference": "1128238382829",
+"vendor": "Acme Co."
+}
+RetainResult
+reference	
+string
+    Any text that may help you identify the lead associated with the
+    certificate such as a unique lead
+
+    identifier or URL pointing to the lead in another system. This value
+    will be displayed in your copy of
+
+    the certificate for your future reference.
+result	
+object
+vendor	
+string
+When retaining a certificate, you can optionally pass the vendor
+name. This is intended for tracking the name
+of the company that provided the lead associated with the
+certificate. TrustedForm will record this value on the
+
+certificate stored in your account. Other accounts cannot see this
+value. When you use TrustedForm reporting,
+
+you can easily filter or group by vendor.
+CopyExpand allCollapse all
+{
+"reference": "1128238382829",
+"result": {
+"expires_at": "2023-07-18T12:03:52Z",
+"masked_cert_url": "string",
+"previously_retained": "false"
+},
+"vendor": "Acme Co."
+}
+Next to 
+
+Insights
+The insights operation retrieves metadata about the lead event that generated a TrustedForm certificate. The properties included in the response can be used to filter and/or route your leads to optimize your business strategies. More information is available in our knowledge base.
+
+Important: Requires a Professional plan or higher. The effective unit cost for an insights call depends on the Insights data points retrieved.
+
+InsightsParameters
+Request individual Insights data points (`properties`) to be returned
+and terms for which to scan for in a certificate session replay.
+properties
+required
+Array of strings
+    A list of the Insights data points you would like to be returned in
+    the response. Some `properties` are not
+
+    compatible with all certificate types and will return a null value.
+    Only contracted `properties` are
+
+    available to query. Your account will only be charged for properties
+    that are returned.
+
+    See InsightsResult for `form_input_method` values.
+Items Enum:	Description
+age_seconds	The number of seconds elapsed since the last recorded session replay event
+approx_ip_geo	The consumer's approximate geographical location based on ip
+bot_detected	A determination of whether the events documented were likely produced by a non-human entity based on ActiveProspect’s proprietary algorithms. This data point is currently undergoing alpha testing. It may contain flaws and may be discontinued.
+browser	An object containing properties that provide information about the consumer's browser.
+created_at	The UTC ISO8601 formatted date and time when TrustedForm Certify was loaded.
+domain	The domain shown to the consumer during the lead event
+expires_at	The UTC ISO8601 formatted date and time when the certificate will expire.
+form_input_kpm	The average number of keystrokes per minute based on the consumer's rate of form input.
+form_input_method	Methods used by the consumer to fill web form fields
+form_input_wpm	The approximate number of words per minute calculated by using the form_input_kpm and assuming five characters represent a word.
+ip	The consumer's public IP address
+is_framed	A boolean indicating that the form was displayed within an iframe.
+is_masked	A boolean indicating if the certificate is masked and does not show source information nor a session replay.
+num_sensitive_content_elements	Count of how many content elements (e.g. img, div) are marked sensitive and hidden from the session replay.
+num_sensitive_form_elements	Count of how many form elements (e.g. input, textarea) are marked sensitive and hidden from the session replay.
+os	An object containing properties that provide information about the consumer's operating system.
+page_url	The URL of the page hosting TrustedForm Certify.
+parent_page_url	The parent URL of the page hosting TrustedForm Certify, if framed.
+seconds_on_page	The time in seconds between when TrustedForm Certify was loaded and when the most recent cert event was received.
+scans	
+object
+An object containing the terms to use to perform a page scan which checks for their presence in the content captured by the certificate.
+
+CopyExpand allCollapse all
+{
+"properties": [
+"seconds_on_page",
+"domain",
+"bot_detected",
+"ip",
+"approx_ip_geo",
+"browser",
+"age_seconds",
+"created_at",
+"expires_at",
+"form_input_method",
+"form_input_kpm",
+"form_input_wpm",
+"is_framed",
+"is_masked",
+"num_sensitive_content_elements",
+"num_sensitive_form_elements",
+"page_url",
+"parent_page_url",
+"os"
+],
+"scans": {
+"forbidden": [
+"free",
+"ipad"
+],
+"required": [
+"home security system"
+]
+}
+}
+InsightsResult
+One of:WebInsightsResultMobileInsightsResultMetaLeadAdsInsightsResult
+properties	
+object
+The data points requested, if available.
+
+scans	
+object (ScansResult)
+An object containing the properties that are part of the page scan process.
+
+
+WebInsightsResult
+WebInsightsResult
+CopyExpand allCollapse all
+{
+"properties": {
+"age_seconds": 76287,
+"approx_ip_geo": {
+"city": "Dallas",
+"country_code": "US",
+"lat": 32.7451,
+"lon": -96.8038,
+"postal_code": "75203",
+"state": "Texas",
+"time_zone": "America/Chicago"
+},
+"bot_detected": false,
+"browser": {
+"full": "Chrome 128.0.0.0",
+"name": "Chrome",
+"user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+"version": {
+"full": "128.0.0.0",
+"major": "128",
+"minor": "0",
+"patch": "0"
+}
+},
+"created_at": "2024-09-18T17:07:09Z",
+"domain": "example.com",
+"expires_at": "2024-12-20T17:07:09Z",
+"form_input_kpm": 234.92560689115115,
+"form_input_method": [
+"typing"
+],
+"form_input_wpm": 47.355958958168905,
+"ip": "192.168.0.1",
+"is_framed": false,
+"is_masked": false,
+"num_sensitive_content_elements": 0,
+"num_sensitive_form_elements": 0,
+"os": {
+"full": "Mac OS X 10.15.7",
+"is_mobile": false,
+"name": "Mac OS X",
+"version": {
+"full": "10.15.7",
+"major": "10",
+"minor": "15",
+"patch": "7"
+}
+},
+"page_url": "https://www.example.com/contact.html",
+"parent_page_url": null,
+"seconds_on_page": 1129
+},
+"scans": {
+"forbidden": [
+"free"
+],
+"required": [
+"offer"
+],
+"result": {
+"forbidden": {
+"found": [ ],
+"not_found": [
+"free"
+]
+},
+"required": {
+"found": [ ],
+"not_found": [
+"offer"
+]
+},
+"success": false
+}
+}
+}
+Next to 
+
+Verify
+The verify operation uses data from lead events and the source from which they originated to verify that a consumer gave their express written consent to be contacted as defined by the requirements configured in your account.
+
+Important
+
+Verify requires a Self-Service plan or higher.
+For Facebook certificates, consent language is detected only if it is included in the custom disclaimer section.
+VerifyParameters
+The advertiser_name parameter is optional but is required to populate the one_to_one property.
+
+The advertiser_name parameter only applies to the One to One Consent value (returned as one_to_one). It has no effect on any other values returned by the Verify call.
+
+The min_font_size_px_required, min_contrast_ratio_required, and opt_in_types_allowed parameters are optional.
+
+advertiser_name	
+string
+The name of the legal entity for an advertiser that will be used to determine if they were given consent in a one to one manner. This value will be normalized to be case insensitive, ignore redundant white space and omit non-alphanumeric characters. Both 'Acme Inc.' and 'acme inc' would result in the same processed value.
+
+min_contrast_ratio_required	
+number
+Specifies the minimum contrast ratio that must be present between the consent language font color and its background. This helps ensure that the text is clearly visible against the background, meeting accessibility and visibility standards.
+
+min_font_size_px_required	
+number
+Specifies the minimum font size (in pixels) that the consent language must meet. Consent languages that do not meet this minimum font size will fail the check.
+
+opt_in_types_allowed	
+Array of strings
+An array of strings specifying the opt-in types that are accepted. The array can include one or more of the following values:
+
+manual: The consumer actively checked a box to provide consent.
+pre-selected: An opt-in field was selected by default, without explicit action from the consumer.
+non-interactive: In the absence of an opt-in field, the consumer gave consent by submitting the form.
+This field is used to define which opt-in types are considered valid.
+
+Items Enum: "manual" "pre-selected" "non-interactive"
+CopyExpand allCollapse all
+{
+"advertiser_name": "Acme Inc.",
+"min_contrast_ratio_required": 7,
+"min_font_size_px_required": 16,
+"opt_in_types_allowed": [
+"manual",
+"pre-selected",
+"non-interactive"
+]
+}
+VerifyResult
+advertiser_name	
+string
+The legal name of the advertiser used to perform the 1:1 consent language check. This value can be passed in the request or set via the verification criteria page and will appear in the response if provided in either.
+
+languages	
+Array of objects
+A list of the consent languages detected within the certificate
+
+min_contrast_ratio_required	
+number
+The number indicating the minimum contrast ratio required between the consent language text and background. This value can be passed in the request or set via the verification criteria page and will appear in the response if provided in either.
+
+min_font_size_px_required	
+number
+The number indicating the minimum font size required for the consent language. This value can be passed in the request or set via the verification criteria page and will appear in the response if provided in either.
+
+opt_in_types_allowed	
+Array of strings
+An array of strings that lists the opt-in types that are allowed. This value can be passed in the request or set via the verification criteria page and will appear in the response if provided through either method.
+
+Items Enum: "manual" "pre-selected" "non-interactive"
+result	
+object
+An object containing properties that detail the result of the verify operation.
+
+CopyExpand allCollapse all
+{
+"advertiser_name": "Acme Inc.",
+"languages": [
+{
+"text": "By clicking on the 'Get Rates' button below, I consent to be contacted"
+}
+],
+"min_contrast_ratio_required": 7,
+"min_font_size_px_required": 16,
+"opt_in_types_allowed": [
+"manual",
+"pre-selected",
+"non-interactive"
+],
+"result": {
+"form_submitted": true,
+"language_approved": true,
+"min_contrast_ratio_satisfied": true,
+"min_font_size_px_satisfied": true,
+"one_to_one": true,
+"opt_in_types_satisfied": true,
+"success": true
+}
+}
+Next to 
+
+Types
+TrustedForm can issue certificates appropriate for several types of lead origination. Each certificate type has a different certificate ID format and supports different Insights data points.
+
+Web
+Web certs are generated using our javascript web SDK. Sign up online for a free TrustedForm Certify account to access the web SDK. Web cert IDs look like this:
+
+eb9fc4dd9bed9ad451a5648946cf4bf09b5bb947
+By default, web certs have a 72-hour (3 day) window during which they are available to API callers. This window is automatically expanded to 90 days if the certificate recorded a form submission event. After this window has elapsed, certificate API calls will return an HTTP 404.
+
+Mobile App
+Mobile app certificates are generated using our mobile SDK for iOS or Android. Contact sales@activeprosepct.com for more information. Mobile app certificates look like this:
+
+11NgkzK_mroUbOD1-x66NigDliU1kdvbaCtLGvyja1K80vU1sKh9grlwP78vzKSp4ncwAfJAlNPNVY8f
+Mobile app certificates have a 90 day window during which they are available to API callers. After this window has elapsed, certificate API calls will return an HTTP 404.
+
+Meta Lead Ads
+Meta Lead Ads certificates are supported through LeadConduit. Contact sales@activeprosepct.com for more information. Meta Lead Ads cert IDs look like this:
+
+0.rpM21ddljS9BNNUOm6FZVVqb5C5JMk1cofI4nDGdwy5ezucyxjok9qLyUXMu9diW62Xac8xNMpomBf1B-XDpfbYvaFMr0YC-54TzHcLrni4.OHOMoMFXaX9YW9DoX_xeng.1vnf6DTWU7sJo6XAxlRP_w
+Meta Lead Ads certificates have a 90 day window during which they are available to API callers. After this window has elapsed, certificate API calls will return an HTTP 404.
+
+Next to 
+
+
+Sending on Ping
+Each TrustedForm certificate captures a session replay of what the consumer saw when they filled out the offer form. The full certificate, including the replay, is visiable to any account holder that has retained the certificate using the retain operation. In order to protect consumer privacy, the certificate hides form input fields recorded in the session replay by default. The In other words, simply retaining a certificate is insufficient for accessing the consumer's PII because it cannot be seen in the replay.
+
+This means that a certificate URL can be safely passed to a lead buyer on ping. As long as the phone number and email address are withheld, the buyer cannot access the consumer's PII. The buyer can only examine the certificate using insights to see if it meets their requirements. When the lead is posted with the certificate URL and the email or phone, the buyer can use match_lead and retain together to both unlock the PII in the session replay and also store the certificate.
+
+Important: If you are pinging a buyer who uses LeadConduit, none of the data you provide on ping can be accessed by the buyer. Because of this, it's prefectly safe to pass the certificate URL and all PII on ping to LeadConduit. Doing so can dramatically reduce post-rejects since LeadConduit is able to evaluate the entire lead on ping.
+
+Next to 
+
+TrustedForm Claiming API (3.0.0)
+Download OpenAPI specification:Download
+
+ActiveProspect Support Team: support@activeprospect.com
+URL: https://support.activeprospect.com
+Terms of Service
+ActiveProspect Community
+Overview
+Claiming
+Claiming a certificate will allow you to verify its legitimacy, view it online, access its data via our API, and refer to the snapshot that was taken of the page as seen by the consumer, for up to 30 days. And you can easily configure your account to keep certificates for as long as you like, for a small additional fee.
+
+Claim Period
+The "claim period" is the time in which a TrustedForm Certificate must be claimed or extended by a TrustedForm Account holder. If it's not, it will expire.
+
+The standard claim period is approximately 72 hours (3 days).
+The extended claim period is approximately 2,160 hours (90 days).
+Within the claim period, TrustedForm Certificates are visible to anyone with access to the TrustedForm Certificate URL. After this period, TrustedForm Certificates are only accessible by the TrustedForm account holders that claimed them.
+
+Extended Certs
+By default, Web Certs have a 72-hour (3 days) window in which they can be claimed. This window is automatically expanded to 90 days if we detect the form's submission.
+
+If you have need to extend Certs beyond the default 3-day window, you have a couple options:
+
+Cert check-in
+Enable extended claims
+Cert Check-in
+ActiveProspect provides TrustedForm Check-in to allow TrustedForm account holders to extend the claim period of certificates beyond the standard claim period. Checking a certificate in extends the claim period without the need to either claim the certificate or have "Extended Claims" enabled on the publishing account.
+
+Enable Extended Claims
+When you enable extended claims, Certificates you claim will automatically be extended and available to be claimed up to 90 days.
+
+Reach out to your account representative to enable extended claims.
+
+Ping (Deprecated)
+The TrustedForm Ping API is meant to be used by lead buyers purchasing leads using the "ping/post" model. This API gives buyers access to that data with the intention that it will be called when the buyer is evaluating a ping request from a seller. The buyer can then use the returned data to set an appropriate bid price.
+
+Comparison to Claim API
+The Ping API does not replace the TrustedForm Claim process. The Ping API cannot be used to verify or store consent for TCPA compliance. It does not support page scanning, fingerprinting, replay, or certificate storage.
+
+Please refer to the Getting Started with Claiming for details on claiming a certificate.
+
+Other information
+Prerequisites
+Add the TrustedForm script to your lead forms.
+Contact support@activeprospect.com to receive an API key.
+Next to 
+
+Retrieving Insights
+Retrieve Certificate Insights
+Account holders using TrustedForm Insights who are receiving certified leads can use the following request to retrieve TrustedForm metadata for the lead contained in a TrustedForm certificate.
+
+Request
+path Parameters
+cert_id
+required
+string
+Certificate ID
+
+Request Body schema: application/json
+optional
+DataServiceRequest
+
+email	
+string
+When using the data service on a certificate, you may pass an optional email (or email_1, email_2, etc) parameter. TrustedForm will extract the email value and perform fingerprinting against the available data.
+
+fingerprint	
+string
+Calculated lead fingerprint values using the email and phone number received in the lead data accompanying the certificate. Each fingerprint value is an SHA1 hash of an email or phone value. Each fingerprint value should be provided in a fingerprint parameter.
+
+If none of the fingerprints you provide match a fingerprint collected on the certificate, then "none of the provided fingerprints match" will be included in the warnings field and outcome will be "failure". This indicates that the lead data collected on the form does not match the lead data that you received.
+
+forbidden_scan_terms	
+string
+Use this parameter to perform a scan of the page for text that must not be present. TrustedForm will then perform a case and whitespace insensitive search for the string. If the string is found in the HTML document, then "string found in snapshot" will be included in the warnings key of the response and the outcome with be "failure".
+
+This parameter may be included multiple times
+
+forbidden_scan_terms[]	
+Array of strings
+Use this parameter to perform a scan of the page for text that must not be present. TrustedForm will then perform a case and whitespace insensitive search for the string. If the string is found in the HTML document, then "string found in snapshot" will be included in the warnings key of the response and the outcome with be "failure".
+
+This parameter may be included multiple times
+
+phone_1	
+string
+When using the data service on a certificate, you may pass an optional phone (or phone_1, phone_2, etc) parameter. TrustedForm will extract the phone number value and perform fingerprinting against the available data.
+
+required_scan_terms	
+string
+Use this parameter to perform a scan of the page for required text. TrustedForm will then perform a case and whitespace insensitive search for the string. If the string is not found in the HTML document, then "string not found in snapshot" will be included in the warnings key of the response and the outcome will be "failure".
+
+This parameter may be included multiple times
+
+required_scan_terms[]	
+Array of strings
+Use this parameter to perform a scan of the page for required text. TrustedForm will then perform a case and whitespace insensitive search for the string. If the string is not found in the HTML document, then "string not found in snapshot" will be included in the warnings key of the response and the outcome will be "failure".
+
+This parameter may be included multiple times
+
+scan_delimiter	
+string
+You can provide your own delimiter to use when wrapping wildcards or tempate variablies. Your choice of delimiter must be homogeneous (i.e. the beginning and end are the same character(s)), such as |, ==, or |||.
+
+Responses
+200Success
+400Malformed Certificate URL
+401Unauthorized
+402Account is inactive or out of funds
+404TrustedForm certificate has expired or could not be found
+405Attempted to claim a 'sandboxed' certificate
+422The certificate has been claimed too many times
+post
+/{cert_id }
+Try it
+Request samples
+Payload
+curl
+Node.js
+Ruby
+application/json
+Copy
+{
+"email": "user@example.com",
+"fingerprint": "Y6cQVpJhoks3ZidbcADOjXsy4vc=",
+"forbidden_scan_terms": "I do not agree to the terms of service",
+"phone_1": "5125551234",
+"required_scan_terms": "I agree to the terms of service"
+}
+Response samples
+200
+400
+401
+402
+404
+
+2 more
+2 more
+application/json
+CopyExpand allCollapse all
+{
+"cert": {
+"age_seconds": 33,
+"approx_ip_geo": {
+"city": "Austin",
+"country_code": "US",
+"lat": 30.4548,
+"lon": -97.7664,
+"postal_code": "78729",
+"state": "TX",
+"time_zone": "America/Chicago"
+},
+"browser": {
+"full": "Chrome 95.0.4638.69",
+"name": "Chrome",
+"version": {
+"full": "95.0.4638.69",
+"major": "95",
+"minor": "0",
+"patch": "4638.69"
+}
+},
+"created_at": "2021-11-12T22:06:44Z",
+"domain": "example.com",
+"event_duration_ms": 21110,
+"expires_at": "2021-11-15T22:06:44Z",
+"form_input_method": [
+"typing",
+"autofill"
+],
+"ip": "8.8.8.8",
+"is_framed": true,
+"is_mobile": false,
+"kpm": 68.2314,
+"operating_system": {
+"full": "Mac OS X 10.15.7",
+"name": "Mac OS X",
+"version": {
+"full": "10.15.7",
+"major": "10",
+"minor": "15",
+"patch": "7"
+}
+},
+"page_id": "5d8ce3c9502b426f77001ae7",
+"page_url": "https://www.example.com/contact.html",
+"parent_page_url": "https://www.example.com/index.html",
+"user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36",
+"wpm": 77.1234
+},
+"fingerprints": {
+"matching": [
+"c4a8e7fe184993964ae81380e91579015306838a",
+"d511850d569bcd7802c30f54de34bb9f2b31eede"
+],
+"non_matching": [
+"d511850d569bcd7802c30f54de34bb9f2b31eed1"
+]
+},
+"is_masked": false,
+"outcome": "success",
+"scans": {
+"forbidden_found": [
+"Enim sit amet venenatis"
+],
+"forbidden_not_found": [
+"Est velit egestas"
+],
+"required_found": [
+"lorem ipsum dolor"
+],
+"required_not_found": [
+"Ad qui aperiri"
+]
+},
+"warnings": [ ]
+}
+Next to 
+
+Viewing Certificates
+Viewing a Certificate
+When you claim a certificate, TrustedForm returns either a "consent" or "consent+data" JSON response depending on your subscription. You can "view" this same response by sending a GET request to the same endpoint.
+
+The following list provides examples of when you might want to use this endpoint:
+
+You were unable to capture the initial response
+You need to validate if you've claimed the certificate
+Request
+path Parameters
+cert_id
+required
+string
+Certificate ID
+
+header Parameters
+Accept	
+string
+Set to application/json to return a JSON response
+
+Responses
+200Success
+400Malformed certificate id
+404TrustedForm certificate has expired or could not be found
+get
+/{cert_id}
+Try it
+Request samples
+curl
+Node.js
+Ruby
+Copy
+curl -i -X GET \
+  'https://cert.trustedform.com/{cert_id}' \
+  -H 'Accept: string'
+Response samples
+200
+400
+404
+application/json
+
+ConsentClaimResponse
+ConsentClaimResponse
+CopyExpand allCollapse all
+{
+"fingerprints": {
+"matching": [
+"c4a8e7fe184993964ae81380e91579015306838a",
+"d511850d569bcd7802c30f54de34bb9f2b31eede"
+],
+"non_matching": [
+"d511850d569bcd7802c30f54de34bb9f2b31eed1"
+]
+},
+"is_masked": false,
+"masked_cert_url": "https://example.com/1145b610ac97aa9f92d7cd2195446eac5e67ce53",
+"outcome": "success",
+"scans": {
+"forbidden_found": [
+"Enim sit amet venenatis"
+],
+"forbidden_not_found": [
+"Est velit egestas"
+],
+"required_found": [
+"lorem ipsum dolor"
+],
+"required_not_found": [
+"Ad qui aperiri"
+]
+},
+"warnings": [ ]
+}
+Next to 
+
+Claiming Certificates
+Claiming a Certificate
+TrustedForm account holders who are receiving certified leads can use the TrustedForm API to claim the certificate provided with each lead. Doing so
+
+Verifies the legitimacy of the certificate
+Stores the certificate for future reference and
+Provides programmatic access to the information shown on the certificate
+To claim a certificate using the TrustedForm API, send an HTTP POST request to the certificate URL sent by your publisher.
+
+Do not make a request unless the URL starts with https://cert.trustedform.com, otherwise you may expose your TrustedForm credentials to someone else
+
+Use a POST request — any other type of request will not claim the certificate
+Use the Accept: application/json request header
+Use the Content-Type: application/json or Content-Type: application/x-www-form-urlencoded header, and encode the request body accordingly.
+In the Authorization header, use the API key provided on the "Settings" tab in the TrustedForm Application and the username 'API'.
+Page Scanning
+As part of the claiming process, it's often required that certain language either exists or doesn't exist on the page. For example, you may want to ensure certain consent language exists. As another example, you may want to ensure other language does not exist, such as "free iPhone".
+
+Page Scanning Params
+You can use the required_scan_terms and forbidden_scan_terms parameters.
+
+required_scan_terms: Use this parameter to scan for language you want to ensure exist on the page.
+forbidden_scan_terms: Use this parameter to scan for language you want to ensure does not exist on the page.
+Often, you will want to scan against a variety of possible texts. The TrustedForm Claiming API enables you to do this in three ways:
+
+Send the variations as a list using required_scan_terms[] or forbidden_scan_terms[]
+Use wildcards in the consent language.
+Use templates.
+You can use a mixture of all three.
+
+Wildcards
+Use {{*}} in the consent language you wish to scan for as a wildcard. For Example, passing "on behalf of {{*}} at the telephone number" will match "on behalf of Mortgage Acme at the telephone number".
+
+Like using exact language, scans using wildcards can be sent in as an array.
+
+Templating
+Templating is different than other versions of page scanning in that you must 1) send it as JSON (i.e. Content-type of application/json); 2) provide a list of key/values to use in the template.
+
+If we were to use the example from above, we might use the following templates:
+
+{
+  "required_scan_terms": [
+    {
+      "template": "on behalf of {{company}} at the telephone number",
+      "variables": [
+        {"company": "Mortgage Acme"},
+        {"company": "Acme Mortgage"},
+        {"company": "Acme Co."}
+      ]
+    },
+    {
+      "template": "on behalf of {{company}} at the {{contact_method}}",
+      "variables": [
+        {"company": "Mortgage Acme", "contact_method": "email"},
+        {"company": "Acme Mortgage", "contact_method": "fax number"},
+        {"company": "Acme Mortgage", "contact_method": "email"},
+        {"company": "Acme Co.", "contact_method": "email"}
+      ]
+    }
+  ]
+}
+Scan Delimiters
+When using wildcards in page scans and page scan templates, the default method is to surround the wildcard or template key with "handlebar" braces ({{}}). If that conflicts with your system, you can provide your own delimiter to use. Currently, TrustedForm only allows homogeneous delimiters (i.e. the beginning and end are the same character(s)) such as **, |, or even +++.
+
+Sandboxed Certificates
+Certificates created with the sandbox flag set to true cannot be claimed.
+
+Request
+path Parameters
+cert_id
+required
+string
+Certificate ID
+
+header Parameters
+Content-type
+required
+string
+Can be either application/json or application/x-www-form-urlencoded.
+
+Request Body schema: application/json
+optional
+Claiming Parameters
+
+email	
+string
+When claiming a certificate, you can pass an optional email (or email_1, email_2, etc) parameter. TrustedForm will extract the email value and perform fingerprinting against the available data.
+
+fingerprints	
+string
+When you claim a certificate you can calculate lead fingerprint values using the email and phone number you received in the lead data accompanying the certificate. Each fingerprint value is an SHA1 hash of an email or phone value. Each fingerprint value should be provided in a fingerprint parameter.
+
+If none of the fingerprints you provide match a fingerprint collected on the certificate you will receive the "none of the provided fingerprints match" message in the claim warnings field. This indicates that the lead data collected on the form does not match the lead data that you received.
+
+forbidden_scan_terms	
+string or Array of strings or PageScan (object) or Array of PageScan (objects)
+Use this parameter to perform a scan of the page for text that must not be present. TrustedForm will then perform a case and whitespace insensitive search for the string. If the string is not found in the HTML document, then "string found in snapshot" will be included in the warnings key of the claim response.
+
+phone	
+string
+When claiming a certificate, you can pass an optional phone (or phone_1, phone_2, etc) parameter. TrustedForm will extract the phone number value and perform fingerprinting against the available data.
+
+reference	
+string
+When you claim a certificate, you can include an optional parameter reference We will store this value in the certificate's claim record. A use case for the reference parameter is to add your unique lead identifier to the claim record, which will provide a reference point from the claim to the certified lead that you received.
+
+This will indicate which lead a certificate belongs to just by examining the certificate data. In the case that your publisher has passed you two leads with the same Certificate URL, this reference parameter will allow you to determine which lead it was originally passed with.
+
+required_scan_terms	
+string or Array of strings or PageScan (object) or Array of PageScan (objects)
+Use this parameter to perform a scan of the page for required text. TrustedForm will then perform a case and whitespace insensitive search for the string. If the string is not found in the HTML document, then "string not found in snapshot" will be included in the warnings key of the claim response.
+
+scan_delimiter	
+string
+You can provide your own delimiter to use when wrapping wildcards or tempate variablies. Your choice of delimiter must be homogeneous (i.e. the beginning and end are the same character(s)), such as |, ==, or |||.
+
+vendor	
+string
+When claiming a certificate, you can pass the optional vendor parameter. This is intended for tracking the name of the company that provided the lead associated with the certificate. We will store this value in the certificate’s claim record. When you use TrustedForm reporting, you can easily filter or group by a vendor.
+
+Responses
+201Claim Created Response
+400Malformed Certificate URL
+401Unauthorized
+402Account is inactive or out of funds
+404TrustedForm certificate has expired or could not be found
+405Attempted to claim a 'sandboxed' certificate
+422The certificate has been claimed too many times
+post
+/{cert_id}
+Try it
+Request samples
+Payload
+curl
+Node.js
+Ruby
+application/json
+Copy
+{
+"email_1": "user@example.com",
+"forbidden_scan_terms": "I do not agree to the terms of service",
+"phone_1": "999-999-0909",
+"reference": "1128238382829",
+"required_scan_terms": "I agree to the terms of service",
+"vendor": "Acme Co."
+}
+Response samples
+201
+400
+401
+402
+404
+
+2 more
+2 more
+application/json
+CopyExpand allCollapse all
+{
+"errors": {
+"detail": "Malformed certificate id"
+},
+"message": "Malformed certificate id",
+"outcome": "error",
+"reason": "Malformed certificate id"
+}
+Next to 
+
+TrustedForm Certificate Check-in
+Check-in
+Check-in supports various actions for a TrustedForm Certificate (e.g. extending the claim period on certificates).
+
+Failing to make the authenticated API call within the standard claim period (72 hours of generating the lead) will result in the irretrievable deletion of the certificate.
+
+Request
+path Parameters
+cert_id
+required
+string
+Certificate ID
+
+Request Body schema: application/json
+optional
+WebCert Parameters
+
+any (CheckInRequest)
+Check-in supports various actions for a TrustedForm Certificate (e.g. extending the claim period on certificates).
+
+Failing to make the authenticated API call within the standard claim period (72 hours of generating the lead) will result in the irretrievable deletion of the certificate.
+
+Responses
+200Success
+400Bad request
+401Unauthorized
+404TrustedForm certificate has expired or could not be found
+post
+/{cert_id}/check_in
+Try it
+Request samples
+Payload
+curl
+Node.js
+Ruby
+application/json
+Copy
+null
+Response samples
+200
+400
+401
+404
+application/json
+Copy
+{ }
+Next to 
+
+Ping
+Retrieving Ping DataDeprecated
+Retrieve ping data directly from a Certificate.
+
+When a lead vendor only provides a TrustedForm Certificate URL, Ping data can be retrieved directly without a Ping URL. Simply append /ping to the Certificate URL and perform an authenticated POST.
+
+Request
+path Parameters
+cert_id
+required
+string
+Certificate ID
+
+Responses
+200Created
+400Malformed Certificate URL
+401Unauthorized
+404TrustedForm certificate has expired or could not be found
+post
+/{cert_id}/ping
+Try it
+Request samples
+curl
+Node.js
+Ruby
+Copy
+curl -i -X POST \
+  'https://cert.trustedform.com/{cert_id}/ping'
+Response samples
+200
+400
+401
+404
+application/json
+CopyExpand allCollapse all
+{
+"cert": {
+"age_seconds": 33,
+"approx_ip_geo": {
+"city": "Austin",
+"country_code": "US",
+"lat": 30.4548,
+"lon": -97.7664,
+"postal_code": "78729",
+"state": "TX",
+"time_zone": "America/Chicago"
+},
+"browser": {
+"full": "Chrome 95.0.4638.69",
+"name": "Chrome",
+"version": {
+"full": "95.0.4638.69",
+"major": "95",
+"minor": "0",
+"patch": "4638.69"
+}
+},
+"created_at": "2021-11-12T22:06:44Z",
+"domain": "example.com",
+"event_duration_ms": 21110,
+"expires_at": "2021-11-15T22:06:44Z",
+"form_input_method": [
+"typing",
+"autofill"
+],
+"ip": "8.8.8.8",
+"is_framed": true,
+"is_mobile": false,
+"kpm": 68.2314,
+"operating_system": {
+"full": "Mac OS X 10.15.7",
+"name": "Mac OS X",
+"version": {
+"full": "10.15.7",
+"major": "10",
+"minor": "15",
+"patch": "7"
+}
+},
+"page_id": "5d8ce3c9502b426f77001ae7",
+"page_url": "https://www.example.com/contact.html",
+"parent_page_url": "https://www.example.com/index.html",
+"user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36",
+"wpm": 77.1234
+},
+"fingerprints": {
+"matching": [
+"c4a8e7fe184993964ae81380e91579015306838a",
+"d511850d569bcd7802c30f54de34bb9f2b31eede"
+],
+"non_matching": [
+"d511850d569bcd7802c30f54de34bb9f2b31eed1"
+]
+},
+"is_masked": false,
+"outcome": "success",
+"scans": {
+"forbidden_found": [
+"Enim sit amet venenatis"
+],
+"forbidden_not_found": [
+"Est velit egestas"
+],
+"required_found": [
+"lorem ipsum dolor"
+],
+"required_not_found": [
+"Ad qui aperiri"
+]
+},
+"warnings": [ ]
+}
+Generate Ping URLDeprecated
+When a lead vendor only provides a TrustedForm Certificate URL, you can generate a new Ping URL for the Certificate. Simply append /ping_url to the Certificate URL and perform an unauthenticated GET.
+
+Each call to this endpoint will generate a new Ping URL, they are all equally valid.
+
+A successful call to this endpoint does not guarantee that the Certificate URL you have provided is valid and unexpired. The standard Certificate expiration window still applies.
+
+Request
+path Parameters
+cert_id
+required
+string
+Certificate ID
+
+Responses
+200Created
+400Malformed Certificate URL
+get
+/{cert_id}/ping_url
+Try it
+Request samples
+curl
+Node.js
+Ruby
+Copy
+curl -i -X GET \
+  'https://cert.trustedform.com/{cert_id}/ping_url'
+Response samples
+200
+400
+application/json
+Copy
+{
+"url": "https://ping.staging.trustedform.com/0.S1e4PrusJ8cXX47dWF_-yCn48kqaFkw4wf_8Ek8T8-uQrpvXakULNXFG0I5DpJVGU7FBmmjq.3UU-IBw5F8Ophz5cf2fzRw.IYJOyb_I7vkQbT3rDVm6wQ"
+}
+Next to 
+
+
+TrustedForm Claiming API (2.0.0)
+Download OpenAPI specification:Download
+
+ActiveProspect Support Team: support@activeprospect.com
+URL: https://support.activeprospect.com
+Terms of Service
+ActiveProspect Community
+Overview
+TrustedForm account holders who are receiving certified leads should use our API to claim the certificate provided with each lead. Doing so verifies the legitimacy of the certificate, stores the certificate for future reference, and provides programmatic access to the information shown on the certificate.
+
+To claim a certificate, send an HTTP POST request to the certificate URL sent by your publisher.
+
+Do not make a request unless the URL starts with https://cert.trustedform.com, otherwise you may expose your TrustedForm credentials to someone else
+Use a POST request — any other type of request will not claim the certificate
+Use the Accept: application/json request header
+Use the Content-Type: application/json or Content-Type: application/x-www-form-urlencoded header, and encode the request body accordingly
+Use the API key provided on the "Settings" tab in the TrustedForm Application and the username 'API'
+Reference
+When you claim a certificate, you can pass the optional reference parameter. We will store this value along with your claimed certificate. The general idea is that you can pass your lead identifier which will provide a back-reference to the certified lead that you received.
+
+This will allow you to know which lead a certificate belongs to, just by examining the certificate data. In the case that your publisher has passed you a two leads with the same Certificate URL, this reference parameter will allow you to determine which lead it was originally passed with.
+
+If you are a LeadConduit customer, the LeadConduit Lead URL will be automatically sent as the reference. This allows you to refer back to the lead with which an individual certificate was collected.
+
+Vendor
+When claiming a certificate, you can pass the optional vendor parameter. We will store this value along with your claimed certificate. Later when you use TrustedForm reporting, you can easily filter or group by vendor.
+
+If you use our LeadConduit platform, the vendor will be automatically sent with each certificate claim request.
+
+Fingerprints
+When you claim a certificate you can calculate lead fingerprint values using the email and phone number you received in the lead data accompanying the certificate. Each fingerprint value is a SHA1 hash of a email or phone value. Each fingerprint value should be provided in a fingerprint parameter.
+
+If at least one of the fingerprints you provide does not match one of those collected on the certificate you will receive the none of the provided fingerprints match in the claim warnings field. This indicates that the lead data collected on the form does not match the lead data that you received.
+
+If you use our LeadConduit platform, the fingerprints will be automatically calculated and sent with each certificate claim request. If you are accessing our API directly, see our instructions for generating a lead fingerprint.
+
+Snapshot Scanning
+To assist in enforcing compliance, TrustedForm can scan the certificate's HTML snapshot to ensure specific phrases are (or are not) present. If you scan for required text (disclosure terms, for example), the TrustedForm response will include a warning if that text isn't found in the snapshot. Alternately, you can scan for forbidden text (disallowed ad copy, for instance), in which case the response will include a warning if the text is found.
+
+Scanning for Required Text
+To search for required text, pass the search text as the scan parameter when you claim the certificate. TrustedForm will then perform a case- and whitespace-insensitive search for the string. If the string is not found in the HTML document, then "string not found in snapshot" will be included in the warnings key of the claim response. If you'd like to search for many different strings, you'll need to use the parameter array syntax: scan[]=example&scan[]=another%20example. Depending on your setup, you may need to URL encode the square brackets.
+
+Scanning for Forbidden Text
+To search for forbidden text, use the scan! parameter in the claim call instead. If TrustedForm's case- and whitespace-insensitive search finds that text in the HTML document, then the message "string found in snapshot" will be given in the warnings key of the claim response.
+
+Note that aside from ignoring whitespace and text case, TrustedForm's scans are literal, including any special characters that you pass.
+
+You may include either or both of scan and scan! in a single claim call. You would then need to look for the corresponding messages in the warnings key of the claim response ("string not found in snapshost" or "string found in snapshot", respectively).
+
+As with scanning for required text, you may pass multiple forbidden text scans with the parameter array syntax: scan![]=example&scan![]=another%20example. Again, depending on your setup, you may need to URL encode the square brackets.
+
+Masked Certificates
+A masked certificate is generated for every claim. You can obtain the URL to it from the masked_cert_url field of the response JSON when you claim a certificate. You can then share it with your buyers. They can claim it using the same claiming instructions as a normal certificate.
+
+Response Codes
+If you successfully claim a certificate, an HTTP 201 Created will be returned with the JSON representation of the certificate in the response body. Beware that using an HTTP GET will also return an HTTP 200 along with the HTML representation of the certificate — your cert will not be claimed with an HTTP GET.
+If the certificate is older than 3 days or if the certificate URL is invalid, then an HTTP 404 Not Found will be returned.
+If you have not authenticated correctly using your API key, an HTTP 403 Forbidden will be returned.
+If you receive any response code other than those above, please let us know.
+
+Pings (Deprecated)
+When you ping a certificate, you are requesting profile information about that particular TrustedForm Certificate. See Ping documentation for additional information on utilizing the ping method.
+
+Claims
+When you claim a certificate, a claim record is created and stored in TrustedForm and the JSON response body contains claim record. See Claim documentation for additional information on claim records.
+
+Next to 
+
+Ping
+Retrieve Ping DataDeprecated
+Retrieve ping data directly from a Certificate. When a lead vendor only provides a TrustedForm Certificate URL, Ping data can be retrieved directly without a Ping URL. Simply append /ping to the Certificate URL and perform an authenticated GET. A certificate's Ping data can be accessed two ways:
+
+Querying a modified TrustedForm Certificate URL
+Querying a vendor-provided TrustedForm Ping URL
+Security
+API Key
+Request
+path Parameters
+cert_id
+required
+string
+Certificate ID
+
+Responses
+200Ping Data
+400Malformed Certificate URL
+401Unauthorized
+404Certificate Not Found
+get
+/{cert_id}/ping
+Try it
+Request samples
+curl
+Node.js
+Ruby
+Copy
+API_KEY="f3bff7c5140a10ab5ff2e628f433f0bb51d255d1a"
+CERT_ID="1f1b96c9150d8050e858c043d543bb4eadae0e6f"
+curl --user "API:$API_KEY" \
+     --request GET \
+     https://cert.trustedform.com/$CERT_ID/ping
+Response samples
+200
+application/json
+CopyExpand allCollapse all
+{
+"age": 0,
+"client": {
+"ip": "string",
+"user_agent": "string",
+"dimensions": {
+"screen": {
+"width": 0,
+"height": 0
+},
+"window": {
+"width": 0,
+"height": 0
+}
+},
+"geo": {
+"city": "string",
+"country": "string",
+"postal_code": "string",
+"subdivisions": [
+"string"
+]
+}
+},
+"created_at": "2019-08-24T14:15:22Z",
+"location": {
+"framed": true,
+"parent_url": "string",
+"url": "string"
+},
+"time_on_page": 0,
+"type": "string"
+}
+Next to 
+
+
+Claiming Certificates
+Claiming Certificates
+TrustedForm account holders who are receiving certified leads can use the TrustedForm API to claim the certificate provided with each lead. Doing so
+
+Verifies the legitimacy of the certificate
+Stores the certificate for future reference and
+Provides programmatic access to the information shown on the certificate
+To claim a certificate using the TrustedForm API, send an HTTP POST request to the certificate URL sent by your publisher.
+
+Do not make a request unless the URL starts with https://cert.trustedform.com, otherwise you may expose your TrustedForm credentials to someone else
+
+Use a POST request — any other type of request will not claim the certificate
+Use the Accept: application/json request header
+Use the Content-Type: application/json or Content-Type: application/x-www-form-url encoded header, and encode the request body accordingly.
+In the Authorization header, use the API key provided on the "Settings" tab in the TrustedForm Application and the username 'API'.
+Page Scanning
+As part of the claiming process, it's often required that certain language either exists or doesn't exist on the page. For example, you may want to ensure certain consent language exists. As another example, you may want to ensure other language does not exist, such as "free iPhone". In both cases, you can provide the language to "scan" for using the scan and scan! parameters.
+
+scan: Use this parameter to scan for language you want to ensure exist on the page.
+scan!: Use this parameter to scan for language you want to ensure does not exist on the page.
+Often, you will want to scan against a variety of possible texts. The TrustedForm Claiming API enables you to do this in three ways:
+
+Send the variations as a list using scan[] or scan![]
+Use wildcards in the consent language.
+Use templates.
+You can use a mixture of all three.
+
+Wildcards
+Use {{*}} in the consent language you wish to scan for as a wildcard. For Example, passing "on behalf of {{*}} at the telephone number" will match "on behalf of Mortgage Acme at the telephone number".
+
+Like using exact language, scans using wildcards can be sent in as an array.
+
+Templating
+Templating is different than other versions of page scanning in that you must 1) send it as JSON (i.e. Content-type of application/json); 2) provide a list of key/values to use in the template.
+
+If we were to use the example from above, we might use the following templates:
+
+{
+  "scan": [
+    {
+      "template": "on behalf of {{company}} at the telephone number",
+      "variable_maps": [
+        {"company": "Mortgage Acme"},
+        {"company": "Acme Mortgage"},
+        {"company": "Acme Co."}
+      ]
+    },
+    {
+      "template": "on behalf of {{company}} at the {{contact_method}}",
+      "variable_maps": [
+        {"company": "Mortgage Acme", "contact_method": "email"},
+        {"company": "Acme Mortgage", "contact_method": "fax number"},
+        {"company": "Acme Mortgage", "contact_method": "email"},
+        {"company": "Acme Co.", "contact_method": "email"}
+      ]
+    }
+  ]
+}
+Sandboxed Certificates
+Certificates created with the sandbox flag set to true cannot be claimed.
+
+Request
+path Parameters
+cert_id
+required
+string
+Certificate ID
+
+query Parameters
+ping_url	
+string
+Ping URL
+
+header Parameters
+Content-type
+required
+string
+Can be either application/json or application/x-www-form-urlencoded.
+
+Request Body schema: application/json
+optional
+Claiming Parameters
+
+anything_else	
+string
+When data is sent with a parameter other than those listed below, TrustedForm will extract the values and perform fingerprinting against the available data.
+
+fingerprints	
+string
+When you claim a certificate you can calculate lead fingerprint values using the email and phone number you received in the lead data accompanying the certificate. Each fingerprint value is an SHA1 hash of an email or phone value. Each fingerprint value should be provided in a fingerprint parameter.
+
+If at least one of the fingerprints you provide does not match one of those collected on the certificate you will receive the none of the provided fingerprints match in the claim warnings field. This indicates that the lead data collected on the form does not match the lead data that you received.
+
+reference	
+string
+When you claim a certificate, you can include an optional parameter reference We will store this value in the certificate's claim record. A use case for the reference parameter is to add your unique lead identifier to the claim record, which will provide a reference point from the claim to the certified lead that you received.
+
+This will indicate which lead a certificate belongs to just by examining the certificate data. In the case that your publisher has passed you two leads with the same Certificate URL, this reference parameter will allow you to determine which lead it was originally passed with.
+
+scan	
+string or Array of strings or Page Scan (object) or Array of Page Scan (objects)
+Use this parameter to perform a scan of the page for required text. TrustedForm will then perform a case and whitespace insensitive search for the string. If the string is not found in the HTML document, then "string not found in snapshot" will be included in the warnings key of the claim response.
+
+This parameter may be included multiple times
+
+scan!	
+string or Array of strings or Page Scan (object) or Array of Page Scan (objects)
+Use this parameter to perform a scan of the page for text that must not be present. TrustedForm will then perform a case and whitespace insensitive search for the string. If the string is not found in the HTML document, then "string found in snapshot" will be included in the warnings key of the claim response.
+
+This parameter may be included multiple times
+
+vendor	
+string
+When claiming a certificate, you can pass the optional vendor parameter. This is intended for tracking the name of the company that provided the lead associated with the certificate. We will store this value in the certificate’s claim record. When you use TrustedForm reporting, you can easily filter or group by a vendor.
+
+Responses
+200Created
+400Malformed Certificate URL
+401Unauthorized
+404Certificate not found
+405Attempted to claim a 'sandboxed' certificate
+410The certificate is expired and no longer available to be claimed
+422The certificate has been claimed too many times
+post
+/{cert_id}
+Try it
+Request samples
+Payload
+curl
+Node.js
+Ruby
+application/json
+Copy
+{
+"email_1": "user@example.com",
+"phone_1": "512-555-1234",
+"reference": "1128238382829",
+"scan": "I agree to the terms of service",
+"scan!": "I do not agree to the terms of service",
+"vendor": "Acme Co."
+}
+Response samples
+200
+400
+401
+404
+405
+
+2 more
+2 more
+application/json
+CopyExpand allCollapse all
+{
+"age": 794,
+"cert": {
+"browser": "Chrome 94.0.4606.71",
+"claims": [
+{
+"age": 794,
+"created_at": "2021-11-02T15:40:29Z",
+"expires_at": "2026-11-01T15:40:29Z",
+"fingerprints": {
+"matching": [ ],
+"non_matching": [ ]
+},
+"id": "61815bed196a8f0722c3597a",
+"masked": false,
+"masked_cert_url": "https://cert.trustedform.com/016baa9bfbd2da2155c98a5bbe0aa64e68e5999x",
+"page_id": "5e29f7dc2e1fa997a0000001",
+"reference": null,
+"scans": {
+"found": [
+"the Certificate URL",
+"Submit the {{*}} a claim"
+],
+"not_found": [
+"Submit the norm",
+"your mom"
+]
+},
+"share_url": "https://cert.trustedform.com/b90e65de06afb55bff16f05536d981bb4bb24452?shared_token=YTNOdFFXNTJaemhLVjFsSlYyaFVZVFZOTjBaVVJWZFZTV3RDZUdwdVFYQXZSVk5oZUV4bFRsZEZaeTlQYmtSNlVFNTRUV3B2ZVhaVWVtaENTRGxOWkc1RmNXNUVWM2RNYkM5WGVsSXpNbmxFUlhaNWFrRjNiakkzZFc1MlQyeE5jbGhFY1VjMVdtTlJaVWs5TFMxMlJtbEllWEpCSzFsVFZrUTRhbms0UldsS2FYZG5QVDA9LS0zZjViODBkNjdjMjkzMWJiMmMwMjAwN2Y2OGM3OTU0N2QwZDdhYjFx",
+"vendor": null,
+"warnings": [ ]
+}
+],
+"created_at": "2021-11-02T15:27:04Z",
+"event_duration": 11283,
+"expires_at": "2021-11-08T15:27:04Z",
+"framed": false,
+"geo": {
+"city": "Columbus",
+"country_code": "US",
+"lat": 39.9625,
+"lon": -83.0061,
+"postal_code": "43215",
+"state": "OH",
+"time_zone": "America/New_York"
+},
+"ip": "3.18.197.0",
+"location": "https://example.com",
+"operating_system": "Linux",
+"parent_location": null,
+"snapshot_url": "https://cert.trustedform.com/x90e65de06afb55bff16f05536d981bb4bb24452/snapshot/index.html",
+"token": "b90e65de06afb55bff16f05536d981bb4bb24452",
+"user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36 DatadogSynthetics"
+},
+"created_at": "2021-11-02T15:40:29Z",
+"expires_at": "2026-11-01T15:40:29Z",
+"fingerprints": {
+"matching": [ ],
+"non_matching": [ ]
+},
+"id": "5fc4f8db2e1fa9cae0106a06",
+"masked": false,
+"masked_cert_url": "https://example.com/1145b610ac97aa9f92d7cd2195446eac5e67ce53",
+"page_id": "5e29f7dc2e1fa997a0000001",
+"reference": null,
+"scans": {
+"found": [
+"lorem ipsum dolor"
+],
+"not_found": [
+"Ad qui aperiri"
+]
+},
+"share_url": "https://cert.trustedform.com/x90e65de06afb55bff16f05536d981bb4bb24452?shared_token=WlZVNVJubHRWa1J2U1hjMVFsVkZla2c1VG5aQ1ZDODJUVkZVZVU5RVppOWhjVlJ6VW05TFFsSkpPVlJDVFhkRll6bERkV2MyV210cE1rRjZWRnB1UzJoR2VFa3JkMkpzYmxSdFNUWTFOalZyU0hkdVZqUnFjRWQ2YTFoQ1VVZHRkVXMxUjBSUFdrMXpSVUU5TFMxU1VUZHllVGRZUXpSMGRHbHdjVnBoY21wT2VuQjNQVDA9LS1kNDliNTExODdjNjc4YThmMjkyZTljODUwNWJlOGI2OTg3NDQ1NTRh",
+"vendor": null,
+"warnings": [ ]
+}
+Next to 
+
+Validate API
+The Validate API allows you to check if a certificate ID you've received is valid or not. To make this request you will need an ActiveProspect account.
+
+Making a Request
+To use the Validate API service you will make a GET request to https://cert.trustedform.com/:cert_id/validate where cert_id is your certificate ID. Just like other TrustedForm services, you will need to include your API key to authenticate in the request.
+
+curl -i -X GET \
+  -u <username>:<password> \
+  'https://cert.trustedform.com/{cert_id}/validate' \
+  -H 'Content-Type: application/json'
+Responses
+Success response are returned if the certificate ID is valid. Failure responses are returned if the certificate ID is invalid or the certificate has expired (i.e. is older than 90 days).
+
+Copy
+{
+  "outcome": "success", 
+  "reason": "This is a valid Facebook certificate id"
+}
+
+{
+  "outcome": "success", 
+  "reason": "This is a valid Mobile certificate id"
+}
+
+{
+  "outcome": "success", 
+  "reason": "This is a valid Web certificate id"
+}
+
+{
+  "outcome": "failure", 
+  "reason": "This is a invalid certificate id"
+}
+
+{
+  "outcome": "failure", 
+  "reason": "Certificate is more than 90 days old"
+}

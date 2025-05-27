@@ -7,23 +7,34 @@ import Testimonials from './components/Testimonials';
 import CTA from './components/CTA';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import Terms from './components/Terms';
 import { LanguageProvider } from './language';
 import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
     <LanguageProvider>
-      <div className="site-wrapper">
-        <Navbar />
-        <Hero />
-        <div className="section section-bg-light"><Services /></div>
-        <div className="section"><Process /></div>
-        <div className="section"><Testimonials /></div>
-        <div className="section"><Eligibility /></div>
-        <div className="section section-bg-blue"><CTA /></div>
-        <Contact />
-        <Footer />
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={
+            <div className="site-wrapper">
+              <Navbar />
+              <Hero />
+              <div className="section section-bg-light"><Services /></div>
+              <div className="section"><Process /></div>
+              <div className="section"><Testimonials /></div>
+              <div className="section"><Eligibility /></div>
+              <div className="section section-bg-blue"><CTA /></div>
+              <Contact />
+              <Footer />
+            </div>
+          } />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<Terms />} />
+        </Routes>
+      </BrowserRouter>
     </LanguageProvider>
   );
 }
