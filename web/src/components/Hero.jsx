@@ -32,18 +32,18 @@ const badgeStyle = {
 const Hero = () => {
   const { t } = useContext(LanguageContext);
   return (
-    <div className="hero-bg" style={{ background: 'linear-gradient(120deg, #f7fafc 60%, #e3eafc 100%)', minHeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5rem 0 6rem 0', borderRadius: 18 }}>
+    <div className="hero-bg" style={{ background: 'linear-gradient(120deg, #f7fafc 60%, #e3eafc 100%)', minHeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '7rem 0 8rem 0', borderRadius: 18 }}>
       <div style={{
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        maxWidth: 1100,
+        maxWidth: 1300,
         width: '100%',
         margin: '0 auto',
-        gap: 48,
+        gap: 64,
         flexWrap: 'wrap',
       }}>
-        <div style={{ flex: 1, minWidth: 320, maxWidth: 600 }}>
+        <div style={{ flex: 1, minWidth: 320, maxWidth: 700 }}>
           <div style={{ display: 'flex', gap: 20, marginBottom: 38, flexWrap: 'nowrap' }}>
             <div style={{ fontWeight: 800, fontSize: '1.01rem', padding: '0.65rem 1.7rem', borderRadius: 999, boxShadow: '0 2px 8px 0 rgba(37,99,235,0.10)', letterSpacing: 0.2, textAlign: 'center', minWidth: 120, maxWidth: 220, whiteSpace: 'nowrap', display: 'inline-block', border: '2.5px solid #fff', marginRight: 18, marginBottom: 0, background: 'linear-gradient(90deg, #22c55e 0%, #16a34a 100%)', color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'Inter, Arial, Helvetica, sans-serif' }}>
               {t('hero.badge1')}
@@ -87,7 +87,7 @@ const Hero = () => {
           className="hero-image"
           src="/hero-justice.png"
           alt="Justice Hero"
-          style={{ maxWidth: 340, width: '100%', minWidth: 180, flex: 1, margin: '0 auto', objectFit: 'contain', borderRadius: 18, boxShadow: '0 8px 32px 0 rgba(25,99,235,0.10)' }}
+          style={{ maxWidth: 500, width: '100%', minWidth: 220, flex: 1, margin: '0 auto', objectFit: 'contain', borderRadius: 24, boxShadow: '0 12px 48px 0 rgba(25,99,235,0.13)' }}
         />
       </div>
       <style>{`
@@ -100,12 +100,13 @@ const Hero = () => {
           .hero-bg > div {
             flex-direction: column !important;
             align-items: flex-start !important;
-            gap: 32px !important;
+            gap: 40px !important;
           }
           .hero-image {
             margin-left: 0 !important;
-            margin-top: 2.5rem !important;
+            margin-top: 3.5rem !important;
             max-width: 98vw !important;
+            min-width: 60vw !important;
           }
           .hero-bg .hero-badges-row {
             justify-content: center !important;
