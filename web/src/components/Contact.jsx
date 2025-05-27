@@ -70,7 +70,7 @@ const Contact = () => {
           <input type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder={t('contact.phone')} style={{ border: '1.5px solid #cfd8dc', borderRadius: 10, padding: '0.9rem 1.2rem', fontSize: '1.08rem', marginBottom: 10 }} />
           <textarea name="case" value={form.case} onChange={handleChange} placeholder={t('contact.case')} style={{ border: '1.5px solid #cfd8dc', borderRadius: 10, padding: '0.9rem 1.2rem', fontSize: '1.08rem', minHeight: 90, marginBottom: 10, resize: 'vertical' }} />
           {/* TrustedForm Consent Checkbox */}
-          <label style={{ display: 'block', margin: '1.2rem 0 0.7rem 0', fontSize: '0.98rem', color: '#1a2236', fontWeight: 500, lineHeight: 1.5 }}>
+          <label style={{ display: 'block', margin: '1.2rem 0 0.7rem 0', fontSize: '0.82rem', color: '#1a2236', fontWeight: 400, lineHeight: 1.3 }}>
             <input type="checkbox" name="tcpaconsent" required style={{ marginRight: 8, accentColor: '#2563eb' }} />
             <span dangerouslySetInnerHTML={{ __html: consentText[language] }} />
           </label>

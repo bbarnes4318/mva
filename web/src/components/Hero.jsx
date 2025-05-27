@@ -43,7 +43,7 @@ const Hero = () => {
         gap: 64,
         flexWrap: 'wrap',
       }}>
-        <div style={{ flex: 1, minWidth: 320, maxWidth: 700 }}>
+        <div style={{ flex: 1, minWidth: 320, maxWidth: 700, textAlign: 'left' }}>
           <div style={{ display: 'flex', gap: 20, marginBottom: 38, flexWrap: 'nowrap' }}>
             <div style={{ fontWeight: 800, fontSize: '1.01rem', padding: '0.65rem 1.7rem', borderRadius: 999, boxShadow: '0 2px 8px 0 rgba(37,99,235,0.10)', letterSpacing: 0.2, textAlign: 'center', minWidth: 120, maxWidth: 220, whiteSpace: 'nowrap', display: 'inline-block', border: '2.5px solid #fff', marginRight: 18, marginBottom: 0, background: 'linear-gradient(90deg, #22c55e 0%, #16a34a 100%)', color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'Inter, Arial, Helvetica, sans-serif' }}>
               {t('hero.badge1')}
@@ -99,7 +99,8 @@ const Hero = () => {
         @media (max-width: 900px) {
           .hero-bg > div {
             flex-direction: column !important;
-            align-items: flex-start !important;
+            align-items: center !important;
+            text-align: center !important;
             gap: 40px !important;
           }
           .hero-image {

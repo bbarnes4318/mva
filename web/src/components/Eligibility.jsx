@@ -107,7 +107,7 @@ const Eligibility = () => {
           />
         </div>
         {/* TrustedForm Consent Checkbox */}
-        <label style={{ display: 'block', margin: '1.2rem 0 0.7rem 0', fontSize: '0.98rem', color: '#1a2236', fontWeight: 500, lineHeight: 1.5 }}>
+        <label style={{ display: 'block', margin: '1.2rem 0 0.7rem 0', fontSize: '0.82rem', color: '#1a2236', fontWeight: 400, lineHeight: 1.3 }}>
           <input type="checkbox" name="tcpaconsent" required style={{ marginRight: 8, accentColor: '#2563eb' }} />
           <span dangerouslySetInnerHTML={{ __html: consentText[language] }} />
         </label>
