@@ -37,6 +37,7 @@ const Hero = () => {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center',
         maxWidth: 1300,
         width: '100%',
         margin: '0 auto',
@@ -87,7 +88,7 @@ const Hero = () => {
           className="hero-image"
           src="/hero-justice.png"
           alt="Justice Hero"
-          style={{ maxWidth: 500, width: '100%', minWidth: 220, flex: 1, margin: '0 auto', objectFit: 'contain', borderRadius: 24, boxShadow: '0 12px 48px 0 rgba(25,99,235,0.13)' }}
+          style={{ maxWidth: 500, width: '100%', minWidth: 220, margin: '0 auto', objectFit: 'contain', borderRadius: 24, boxShadow: '0 12px 48px 0 rgba(25,99,235,0.13)' }}
         />
       </div>
       <style>{`
