@@ -1,9 +1,15 @@
+/* Trigger redeploy: mobile scroll fix */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
 
 /* MOBILE RESPONSIVE OVERHAUL - 2024-06 */
 
 html, body, *, *:before, *:after {
   box-sizing: border-box;
+}
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 @media (max-width: 600px) {
@@ -301,18 +307,8 @@ button:hover, .hero-cta:hover, .cta-main:hover, .cta-secondary:hover, .contact-f
   padding: 0.5rem 0;
 }
 
-.hero-bg {
-  background: linear-gradient(120deg, #f7fafc 60%, #e3eafc 100%);
-  min-height: 600px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 5rem 0 6rem 0;
-  border-radius: 18px;
-}
-
 .site-wrapper {
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   background: #f5f7fa;
 }
@@ -541,7 +537,7 @@ button:hover, .hero-cta:hover, .cta-main:hover, .cta-secondary:hover, .contact-f
 }
 
 .hero {
-  width: 100vw;
+  width: 100%;
   min-height: 650px;
   background: linear-gradient(120deg, rgba(10,20,40,0.96) 80%, rgba(25,118,210,0.8)), url('/hero-bg.png') center/cover no-repeat;
   color: #fff;
@@ -551,7 +547,6 @@ button:hover, .hero-cta:hover, .cta-main:hover, .cta-secondary:hover, .contact-f
   padding: 0 0 0 7vw;
   box-sizing: border-box;
   margin: 0;
-  max-width: 100vw;
 }
 
 .hero-container {
