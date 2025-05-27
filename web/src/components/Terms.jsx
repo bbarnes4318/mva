@@ -22,13 +22,13 @@ const content = {
     ],
     limit: 'Limitación de Responsabilidad',
     limitList: [
-      'No somos responsables de ningún daño que surja de su uso del sitio',
+      'No somos responsables de ningún daño que surja del uso del sitio',
       'El uso del sitio es bajo su propio riesgo'
     ],
     contact: 'Contáctenos',
     contactText: 'Si tiene preguntas sobre estos Términos y Condiciones, contáctenos en',
     back: 'Volver al inicio',
-    lang: 'EN'
+    toggle: 'EN'
   },
   en: {
     title: 'Terms & Conditions',
@@ -54,13 +54,13 @@ const content = {
     contact: 'Contact Us',
     contactText: 'If you have any questions about these Terms & Conditions, please contact us at',
     back: 'Back to Home',
-    lang: 'ES'
+    toggle: 'ES'
   }
 };
 
 const Terms = () => {
   const { language } = useContext(LanguageContext);
-  const [lang, setLang] = useState(language || 'es');
+  const [lang, setLang] = useState(language);
   const t = content[lang];
 
   return (
@@ -73,7 +73,7 @@ const Terms = () => {
             style={{ fontWeight: 700, fontSize: '1.05rem', border: 'none', background: 'none', color: '#2563eb', cursor: 'pointer', padding: '0.4rem 1.1rem', borderRadius: 8, transition: 'background 0.2s' }}
             aria-label="Switch language"
           >
-            {t.lang}
+            {t.toggle}
           </button>
         </div>
         <h1 style={{ fontWeight: 900, fontSize: '2.7rem', marginBottom: '1.5rem', textAlign: 'left', color: '#1746a2', letterSpacing: '-1px' }}>{t.title}</h1>
@@ -98,7 +98,7 @@ const Terms = () => {
         </p>
         <div style={{ marginTop: 40 }}>
           <Link to="/" style={{ display: 'inline-block', background: 'linear-gradient(90deg, #2563eb 0%, #22c55e 100%)', color: '#fff', fontWeight: 700, fontSize: '1.08rem', borderRadius: 999, padding: '0.8rem 2.2rem', textDecoration: 'none', boxShadow: '0 2px 8px 0 rgba(37,99,235,0.10)', border: 'none', letterSpacing: 0.1, transition: 'background 0.2s, color 0.2s' }}>
-            {lang === 'es' ? 'Volver al inicio' : 'Back to Home'}
+            {t.back}
           </Link>
         </div>
       </div>
