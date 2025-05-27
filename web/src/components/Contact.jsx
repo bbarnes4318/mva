@@ -1,8 +1,28 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { LanguageContext } from '../language.jsx';
 
+const consentText = {
+  en: `By checking this box, I consent to receive marketing calls, text messages, and emails from Fair Wreck at the contact information I've provided, using automated dialing systems, prerecorded messages, and artificial-voice technologies. I certify that I am the subscriber (or customary user) of the telephone number I've provided; my consent is not a condition of purchase; message and data rates may apply; I may revoke this consent at any time by replying "STOP" for texts or emailing support@fairwreck.com for calls; see <a href="/privacy" target="_blank">Privacy Policy</a> and <a href="/terms" target="_blank">Terms & Conditions</a>.`,
+  es: `Al marcar esta casilla, doy mi consentimiento para recibir llamadas de marketing, mensajes de texto y correos electrónicos de Fair Wreck en la información de contacto que he proporcionado, utilizando sistemas de marcación automática, mensajes pregrabados y tecnologías de voz artificial. Certifico que soy el suscriptor (o usuario habitual) del número de teléfono que he proporcionado; mi consentimiento no es una condición de compra; pueden aplicarse tarifas de mensajes y datos; puedo revocar este consentimiento en cualquier momento respondiendo "STOP" a los mensajes de texto o enviando un correo electrónico a support@fairwreck.com para llamadas; consulte la <a href="/privacy" target="_blank">Política de Privacidad</a> y los <a href="/terms" target="_blank">Términos y Condiciones</a>.`
+};
+
 const Contact = () => {
-  const { t } = useContext(LanguageContext);
+  const { t, language } = useContext(LanguageContext);
+
+  useEffect(() => {
+    // Inject TrustedForm script once on mount
+    if (!window._trustedformScriptLoaded) {
+      const tf = document.createElement('script');
+      tf.type = 'text/javascript';
+      tf.async = true;
+      tf.src = (document.location.protocol === 'https:' ? 'https' : 'http') +
+        '://api.trustedform.com/trustedform.js?field=xxTrustedFormCertUrl&use_tagged_consent=true&l=' +
+        new Date().getTime() + Math.random();
+      document.body.appendChild(tf);
+      window._trustedformScriptLoaded = true;
+    }
+  }, []);
+
   return (
     <section className="contact-section" id="contact" style={{ background: 'linear-gradient(120deg, #e3eafc 60%, #f7fafc 100%)', padding: '4.5rem 0' }}>
       <div className="contact-card" style={{ maxWidth: 540, margin: '0 auto', background: '#fff', borderRadius: 22, boxShadow: '0 8px 32px 0 rgba(60,72,88,0.13)', padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -18,6 +38,12 @@ const Contact = () => {
           <input type="email" placeholder={t('contact.email')} style={{ border: '1.5px solid #cfd8dc', borderRadius: 10, padding: '0.9rem 1.2rem', fontSize: '1.08rem', marginBottom: 10 }} />
           <input type="tel" placeholder={t('contact.phone')} style={{ border: '1.5px solid #cfd8dc', borderRadius: 10, padding: '0.9rem 1.2rem', fontSize: '1.08rem', marginBottom: 10 }} />
           <textarea placeholder={t('contact.case')} style={{ border: '1.5px solid #cfd8dc', borderRadius: 10, padding: '0.9rem 1.2rem', fontSize: '1.08rem', minHeight: 90, marginBottom: 10, resize: 'vertical' }} />
+          {/* TrustedForm Consent Checkbox */}
+          <label style={{ display: 'block', margin: '1.2rem 0 0.7rem 0', fontSize: '0.98rem', color: '#1a2236', fontWeight: 500, lineHeight: 1.5 }}>
+            <input type="checkbox" name="tcpaconsent" required style={{ marginRight: 8, accentColor: '#2563eb' }} />
+            <span dangerouslySetInnerHTML={{ __html: consentText[language] }} />
+          </label>
+          {/* TrustedForm hidden field will be injected by SDK */}
           <button type="submit" style={{ background: 'linear-gradient(90deg, #2563eb 0%, #22c55e 100%)', color: '#fff', fontWeight: 900, fontSize: '1.15rem', borderRadius: 999, padding: '1rem 0', border: 'none', marginTop: 8, boxShadow: '0 4px 18px 0 rgba(37,99,235,0.13)', letterSpacing: 0.2, width: '100%' }}>
             {t('contact.button')}
           </button>

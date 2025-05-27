@@ -1,11 +1,30 @@
-import { useState, useRef, useContext } from 'react';
+import { useState, useRef, useContext, useEffect } from 'react';
 import { LanguageContext } from '../language.jsx';
 
+const consentText = {
+  en: `By checking this box, I consent to receive marketing calls, text messages, and emails from Fair Wreck at the contact information I've provided, using automated dialing systems, prerecorded messages, and artificial-voice technologies. I certify that I am the subscriber (or customary user) of the telephone number I've provided; my consent is not a condition of purchase; message and data rates may apply; I may revoke this consent at any time by replying "STOP" for texts or emailing support@fairwreck.com for calls; see <a href="/privacy" target="_blank">Privacy Policy</a> and <a href="/terms" target="_blank">Terms & Conditions</a>.`,
+  es: `Al marcar esta casilla, doy mi consentimiento para recibir llamadas de marketing, mensajes de texto y correos electrónicos de Fair Wreck en la información de contacto que he proporcionado, utilizando sistemas de marcación automática, mensajes pregrabados y tecnologías de voz artificial. Certifico que soy el suscriptor (o usuario habitual) del número de teléfono que he proporcionado; mi consentimiento no es una condición de compra; pueden aplicarse tarifas de mensajes y datos; puedo revocar este consentimiento en cualquier momento respondiendo "STOP" a los mensajes de texto o enviando un correo electrónico a support@fairwreck.com para llamadas; consulte la <a href="/privacy" target="_blank">Política de Privacidad</a> y los <a href="/terms" target="_blank">Términos y Condiciones</a>.`
+};
+
 const Eligibility = () => {
-  const { t } = useContext(LanguageContext);
+  const { t, language } = useContext(LanguageContext);
   const [form, setForm] = useState({ name: '', email: '', phone: '', case: '' });
   const [submitted, setSubmitted] = useState(false);
   const formRef = useRef(null);
+
+  useEffect(() => {
+    // Inject TrustedForm script once on mount
+    if (!window._trustedformScriptLoaded) {
+      const tf = document.createElement('script');
+      tf.type = 'text/javascript';
+      tf.async = true;
+      tf.src = (document.location.protocol === 'https:' ? 'https' : 'http') +
+        '://api.trustedform.com/trustedform.js?field=xxTrustedFormCertUrl&use_tagged_consent=true&l=' +
+        new Date().getTime() + Math.random();
+      document.body.appendChild(tf);
+      window._trustedformScriptLoaded = true;
+    }
+  }, []);
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -69,6 +88,12 @@ const Eligibility = () => {
             required
           />
         </div>
+        {/* TrustedForm Consent Checkbox */}
+        <label style={{ display: 'block', margin: '1.2rem 0 0.7rem 0', fontSize: '0.98rem', color: '#1a2236', fontWeight: 500, lineHeight: 1.5 }}>
+          <input type="checkbox" name="tcpaconsent" required style={{ marginRight: 8, accentColor: '#2563eb' }} />
+          <span dangerouslySetInnerHTML={{ __html: consentText[language] }} />
+        </label>
+        {/* TrustedForm hidden field will be injected by SDK */}
         <button className="eligibility-form-submit eligibility-green-cta" type="submit" style={{ background: '#22c55e', color: '#fff', fontWeight: 900, fontSize: '1.15rem', boxShadow: '0 6px 32px 0 rgba(34,197,94,0.18)', border: 'none' }}>
           {t('eligibility.button')}
         </button>
