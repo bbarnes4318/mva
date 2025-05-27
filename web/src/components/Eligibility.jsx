@@ -30,10 +30,28 @@ const Eligibility = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    setSubmitted(true);
-    // Here you would send the form data to your backend or email service
+    setSubmitted(false);
+    // Get TrustedForm cert URL from hidden field
+    const tfUrl = formRef.current ? formRef.current["xxTrustedFormCertUrl"]?.value : '';
+    const tcpaconsent = formRef.current ? formRef.current["tcpaconsent"]?.checked : false;
+    try {
+      const response = await fetch('http://localhost:5000/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, xxTrustedFormCertUrl: tfUrl, tcpaconsent })
+      });
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        setSubmitted(false);
+        alert('Submission failed. Please try again.');
+      }
+    } catch (err) {
+      setSubmitted(false);
+      alert('Submission failed. Please try again.');
+    }
   };
 
   return (

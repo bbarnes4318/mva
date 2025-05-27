@@ -83,15 +83,11 @@ const Hero = () => {
             </div>
           </div>
         </div>
-        <video
+        <img
           className="hero-image"
-          src="/hero-justice.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
+          src="/hero-justice.png"
+          alt="Justice Hero"
           style={{ maxWidth: 340, width: '100%', minWidth: 180, flex: 1, margin: '0 auto', objectFit: 'contain', borderRadius: 18, boxShadow: '0 8px 32px 0 rgba(25,99,235,0.10)' }}
-          aria-label="Justice Video"
         />
       </div>
       <style>{`
