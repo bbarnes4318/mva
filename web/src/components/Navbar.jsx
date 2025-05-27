@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { LanguageContext } from '../language.jsx';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const { language, setLanguage, t } = useContext(LanguageContext);
@@ -10,9 +11,9 @@ const Navbar = () => {
           <img src="/fw-logo.png" alt="Logo" style={{ height: 160, width: 'auto', display: 'block' }} />
         </div>
         <div className="navbar-links" style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
-          <a href="#services">{t('navbar.services')}</a>
-          <a href="#process">{t('navbar.process')}</a>
-          <a href="#testimonials">{t('navbar.testimonials')}</a>
+          <Link to="/#services">{t('navbar.services')}</Link>
+          <Link to="/#process">{t('navbar.process')}</Link>
+          <Link to="/#testimonials">{t('navbar.testimonials')}</Link>
           <a href="tel:18883172922" className="navbar-cta-phone" style={{ background: 'linear-gradient(90deg, #22c55e 0%, #16a34a 100%)', color: '#fff', fontWeight: 900, fontSize: '1.08rem', borderRadius: 999, padding: '0.7rem 1.7rem', boxShadow: '0 2px 8px 0 rgba(34,197,94,0.13)', border: 'none', marginLeft: 18, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
             <span role="img" aria-label="Phone">📞</span> {t('navbar.freeConsult')}
           </a>
