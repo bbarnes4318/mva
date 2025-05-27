@@ -1,3 +1,25 @@
+**The following should be applied along with the Trusted Form setup below it**
+
+<label>
+  <input type="checkbox" name="tcpaconsent" required>
+  By checking this box, I consent to receive marketing calls, text messages, and emails from <strong>Your Company Name</strong> at the contact information I’ve provided, using automated dialing systems, prerecorded messages, and artificial-voice technologies. I certify that I am the subscriber (or customary user) of the telephone number I’ve provided; my consent is not a condition of purchase; message and data rates may apply; I may revoke this consent at any time by replying “STOP” for texts or emailing support@fairwreck.com for calls; see <a href="/privacy-policy" target="_blank">Privacy Policy</a> and <a href="/terms" target="_blank">Terms & Conditions</a>.
+</label>
+
+Integrating with TrustedForm
+When the TrustedForm SDK fires, it will capture the user’s click on “Submit” and the exact language above, creating a timestamped video replay and certificate URL. Store those certificates alongside each lead so you can instantly prove the user saw—and affirmatively checked—your TCPA/DNC language. 
+ActiveProspect
+
+Implementation Tips
+
+Place the checkbox above the Submit button, un-checked by default, and mark it required.
+
+Link to Privacy Policy and Terms in a new tab.
+
+Log and store the resulting TrustedForm certificate URL in your CRM for every opt-in event.
+
+
+**Trusted Form Setup**
+
 TrustedForm Certify
 Verify your marketing domains in My Account (requires admin privileges)
 Implement the Web SDK by copying the Javascript Snippet below and adding it to your form page
