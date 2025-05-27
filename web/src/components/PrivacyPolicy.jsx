@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const PrivacyPolicy = () => (
   <div style={{ minHeight: '100vh', background: 'linear-gradient(120deg, #e3eafc 60%, #f7fafc 100%)', padding: '3rem 0' }}>
     <Navbar />
-    <div style={{ maxWidth: 1100, margin: '3rem auto 0 auto', background: '#fff', borderRadius: 22, boxShadow: '0 8px 32px 0 rgba(37,99,235,0.10)', padding: '4rem 4rem', borderTop: '6px solid #2563eb', fontFamily: 'Inter, Arial, Helvetica, sans-serif', color: '#1a2236' }}>
+    <div style={{ maxWidth: '100%', width: '100%', margin: '3rem 0 0 0', background: '#fff', borderRadius: 10, boxShadow: '0 8px 32px 0 rgba(37,99,235,0.10)', padding: '4rem 5vw', borderTop: '6px solid #2563eb', fontFamily: 'Inter, Arial, Helvetica, sans-serif', color: '#1a2236' }}>
       <h1 style={{ fontWeight: 900, fontSize: '2.9rem', marginBottom: '0.7rem', textAlign: 'center', color: '#1746a2', letterSpacing: '-1px' }}>Privacy Policy</h1>
       <div style={{ height: 3, width: 80, background: '#22c55e', borderRadius: 2, margin: '0 auto 2.2rem auto' }} />
       <p style={{ fontSize: '1.35rem', marginBottom: '2.2rem', textAlign: 'center', color: '#2563eb', fontWeight: 500 }}>
