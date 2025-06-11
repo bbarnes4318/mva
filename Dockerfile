@@ -14,8 +14,9 @@ RUN npm ci
 # Copy the rest of the application
 COPY . .
 
-# Build the application if needed
-RUN npm run build || true
+# Set environment variables
+ENV NODE_ENV=production
+ENV PORT=8080
 
 # Add healthcheck
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
@@ -23,4 +24,5 @@ HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
 
 EXPOSE 8080
 
-CMD ["npm", "start"] 
+# Start the application
+CMD ["node", "server.js"] 
