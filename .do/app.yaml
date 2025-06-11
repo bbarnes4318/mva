@@ -14,6 +14,8 @@ services:
   envs:
   - key: NODE_ENV
     value: production
+  - key: PORT
+    value: "8080"
   - type: SECRET
     key: DATABASE_URL
     value: ${db.DATABASE_URL}
