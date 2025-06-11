@@ -16,4 +16,29 @@ services:
     value: production
   - type: SECRET
     key: DATABASE_URL
-    value: ${db.DATABASE_URL} 
+    value: ${db.DATABASE_URL}
+  - type: SECRET
+    key: EMAIL_USER
+    value: ${EMAIL_USER}
+  - type: SECRET
+    key: EMAIL_PASS
+    value: ${EMAIL_PASS}
+  - type: SECRET
+    key: PROXY_HOST
+    value: ${PROXY_HOST}
+  - type: SECRET
+    key: PROXY_PORT
+    value: ${PROXY_PORT}
+  - type: SECRET
+    key: PROXY_BASE_USER
+    value: ${PROXY_BASE_USER}
+  - type: SECRET
+    key: PROXY_PASS
+    value: ${PROXY_PASS}
+  health_check:
+    http_path: /
+    initial_delay_seconds: 30
+    period_seconds: 60
+    timeout_seconds: 10
+    success_threshold: 1
+    failure_threshold: 3 
