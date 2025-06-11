@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer className="footer-main" style={{ background: 'linear-gradient(90deg, #e3eafc 0%, #60a5fa 100%)' }}>
       <div className="footer-content">
-        <div className="footer-logo"><img src="/fw-logo.png" alt="Fair Wreck Logo" className="footer-logo-img" /></div>
+        <div className="footer-logo"><img src="./fw-logo.png" alt="Fair Wreck Logo" className="footer-logo-img" /></div>
         <div className="footer-links">
           <div><strong>{t('footer.quick')}</strong><br />
             <a href="#services">{t('footer.services')}</a><br />

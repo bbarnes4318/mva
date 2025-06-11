@@ -1,0 +1,167 @@
+Server running on port 8000
+Server running on port 8000
+Server failed to start: Error: listen EADDRINUSE: address already in use :::8000
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1912:16)
+    at listenInCluster (node:net:1969:12)
+    at Server.listen (node:net:2074:7)
+    at Function.listen (C:\Users\Jimbo\Desktop\mva\node_modules\express\lib\application.js:605:24)
+    at Object.<anonymous> (C:\Users\Jimbo\Desktop\mva\server.js:168:7)
+    at Module._compile (node:internal/modules/cjs/loader:1565:14)
+    at Object..js (node:internal/modules/cjs/loader:1708:10)
+    at Module.load (node:internal/modules/cjs/loader:1318:32)
+    at Function._load (node:internal/modules/cjs/loader:1128:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+Server running on port 8000
+Server failed to start: Error: listen EADDRINUSE: address already in use :::8000
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1912:16)
+    at listenInCluster (node:net:1969:12)
+    at Server.listen (node:net:2074:7)
+    at Function.listen (C:\Users\Jimbo\Desktop\mva\node_modules\express\lib\application.js:605:24)
+    at Object.<anonymous> (C:\Users\Jimbo\Desktop\mva\server.js:168:7)
+    at Module._compile (node:internal/modules/cjs/loader:1565:14)
+    at Object..js (node:internal/modules/cjs/loader:1708:10)
+    at Module.load (node:internal/modules/cjs/loader:1318:32)
+    at Function._load (node:internal/modules/cjs/loader:1128:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+Server running on port 8001
+Server running on port 8000
+Server running on port 8000
+Server running on port 8000
+Server running on port 8000
+Server running on port 8000
+Server running on port 8000
+2025-06-09T12:14:07.793Z - OPTIONS /api/submit
+2025-06-09T12:14:07.806Z - POST /api/submit
+=== FORM SUBMISSION START ===
+Request body: {
+  "name": "James Test",
+  "email": "james@test.com",
+  "phone": "8653969104",
+  "case": "data",
+  "xxTrustedFormCertUrl": "https://cert.trustedform.com/14c202e08611dc3d595d6bf661567cadb771c21c",
+  "tcpaconsent": true
+}
+Getting proxy for phone: 8653969104
+Proxy details: {
+  "host": "gw.dataimpulse.com",
+  "port": "823",
+  "user": "b31f50d644ecaffc2993__cr.us;zip.865",
+  "pass": "8cd531d71ea28e4f"
+}
+Writing to CSV...
+CSV data: {
+  "timestamp": "2025-06-09T12:14:08.038Z",
+  "name": "James Test",
+  "email": "james@test.com",
+  "phone": "8653969104",
+  "case": "data",
+  "xxTrustedFormCertUrl": "https://cert.trustedform.com/14c202e08611dc3d595d6bf661567cadb771c21c",
+  "tcpaconsent": true,
+  "proxy_ip": "gw.dataimpulse.com:823"
+}
+CSV write complete
+Sending email...
+Email sent successfully
+=== FORM SUBMISSION COMPLETE ===
+2025-06-09T12:14:48.511Z - OPTIONS /api/submit
+2025-06-09T12:14:48.516Z - POST /api/submit
+=== FORM SUBMISSION START ===
+Request body: {
+  "name": "James Test",
+  "email": "james@test.com",
+  "phone": "8653969104",
+  "case": "data",
+  "xxTrustedFormCertUrl": "https://cert.trustedform.com/14c202e08611dc3d595d6bf661567cadb771c21c",
+  "tcpaconsent": true
+}
+Getting proxy for phone: 8653969104
+Proxy details: {
+  "host": "gw.dataimpulse.com",
+  "port": "823",
+  "user": "b31f50d644ecaffc2993__cr.us;zip.865",
+  "pass": "8cd531d71ea28e4f"
+}
+Writing to CSV...
+CSV data: {
+  "timestamp": "2025-06-09T12:14:48.518Z",
+  "name": "James Test",
+  "email": "james@test.com",
+  "phone": "8653969104",
+  "case": "data",
+  "xxTrustedFormCertUrl": "https://cert.trustedform.com/14c202e08611dc3d595d6bf661567cadb771c21c",
+  "tcpaconsent": true,
+  "proxy_ip": "gw.dataimpulse.com:823"
+}
+CSV write complete
+Sending email...
+Email sent successfully
+=== FORM SUBMISSION COMPLETE ===
+2025-06-09T12:15:16.668Z - OPTIONS /api/submit
+2025-06-09T12:15:16.670Z - POST /api/submit
+=== FORM SUBMISSION START ===
+Request body: {
+  "name": "James Jennings",
+  "email": "jjennings@aol.com",
+  "phone": "8653969859",
+  "case": "hello how are you",
+  "xxTrustedFormCertUrl": "https://cert.trustedform.com/ef34f023990cd956e93a651815991bd18a6e8e50",
+  "tcpaconsent": true
+}
+Getting proxy for phone: 8653969859
+Proxy details: {
+  "host": "gw.dataimpulse.com",
+  "port": "823",
+  "user": "b31f50d644ecaffc2993__cr.us;zip.865",
+  "pass": "8cd531d71ea28e4f"
+}
+Writing to CSV...
+CSV data: {
+  "timestamp": "2025-06-09T12:15:16.671Z",
+  "name": "James Jennings",
+  "email": "jjennings@aol.com",
+  "phone": "8653969859",
+  "case": "hello how are you",
+  "xxTrustedFormCertUrl": "https://cert.trustedform.com/ef34f023990cd956e93a651815991bd18a6e8e50",
+  "tcpaconsent": true,
+  "proxy_ip": "gw.dataimpulse.com:823"
+}
+CSV write complete
+Sending email...
+Email sent successfully
+=== FORM SUBMISSION COMPLETE ===
+2025-06-09T12:15:35.543Z - OPTIONS /api/submit
+2025-06-09T12:15:35.547Z - POST /api/submit
+=== FORM SUBMISSION START ===
+Request body: {
+  "name": "James Jennings",
+  "email": "jjennings@aol.com",
+  "phone": "8653969859",
+  "case": "hello how are you",
+  "xxTrustedFormCertUrl": "https://cert.trustedform.com/ef34f023990cd956e93a651815991bd18a6e8e50",
+  "tcpaconsent": true
+}
+Getting proxy for phone: 8653969859
+Proxy details: {
+  "host": "gw.dataimpulse.com",
+  "port": "823",
+  "user": "b31f50d644ecaffc2993__cr.us;zip.865",
+  "pass": "8cd531d71ea28e4f"
+}
+Writing to CSV...
+CSV data: {
+  "timestamp": "2025-06-09T12:15:35.548Z",
+  "name": "James Jennings",
+  "email": "jjennings@aol.com",
+  "phone": "8653969859",
+  "case": "hello how are you",
+  "xxTrustedFormCertUrl": "https://cert.trustedform.com/ef34f023990cd956e93a651815991bd18a6e8e50",
+  "tcpaconsent": true,
+  "proxy_ip": "gw.dataimpulse.com:823"
+}
+CSV write complete
+Sending email...
+Email sent successfully
+=== FORM SUBMISSION COMPLETE ===
+2025-06-09T12:15:40.409Z - GET /api/submit

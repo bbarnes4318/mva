@@ -81,9 +81,9 @@ const Hero = () => {
             </div>
             <div style={{ background: '#fff', borderRadius: 18, boxShadow: '0 4px 24px 0 rgba(60,72,88,0.10)', border: '1.5px solid #e3eafc', padding: '1.2rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 18, margin: '32px 0 40px 0', fontFamily: 'Inter, Arial, Helvetica, sans-serif' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 32, marginBottom: 10 }}>
-                <img src="/badge-bbb.png" alt="BBB Accredited" style={{ height: 44, width: 'auto', display: 'block' }} />
-                <img src="/badge-google.png" alt="Google Reviews" style={{ height: 44, width: 'auto', display: 'block' }} />
-                <img src="/badge-avvo.png" alt="Avvo Rating" style={{ height: 44, width: 'auto', display: 'block' }} />
+                <img src="./badge-bbb.png" alt="BBB Accredited" style={{ height: 44, width: 'auto', display: 'block' }} />
+                <img src="./badge-google.png" alt="Google Reviews" style={{ height: 44, width: 'auto', display: 'block' }} />
+                <img src="./badge-avvo.png" alt="Avvo Rating" style={{ height: 44, width: 'auto', display: 'block' }} />
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2, marginTop: 6 }}>
                 {[...Array(5)].map((_, i) => (
@@ -95,9 +95,9 @@ const Hero = () => {
           </div>
           <img
             className="hero-image"
-            src="/hero-justice.png"
-            alt="Justice Hero"
-            style={{ maxWidth: 500, width: '100%', minWidth: 220, margin: '0 auto', objectFit: 'contain', borderRadius: 24, boxShadow: '0 12px 48px 0 rgba(25,99,235,0.13)' }}
+            src="./hero-justice.png"
+            alt="Justice Scales"
+            style={{ width: '100%', height: 'auto', maxWidth: 600, margin: '0 auto', display: 'block' }}
           />
         </div>
       </div>
