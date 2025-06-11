@@ -1,3 +1,5 @@
+const express = require('express');
+const router = express.Router();
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
@@ -5,11 +7,11 @@ require('dotenv').config();
 async function getProxyForPhone(phone) {
   try {
     const areaCode = phone.replace(/\D/g, '').substring(0, 3);
-    const proxy_base_user = "b31f50d644ecaffc2993__cr.us";
+    const proxy_base_user = process.env.PROXY_BASE_USER;
     const proxy_user = `${proxy_base_user};zip.${areaCode}`;
-    const proxy_password = "8cd531d71ea28e4f";
-    const proxy_host = "gw.dataimpulse.com";
-    const proxy_port = "823";
+    const proxy_password = process.env.PROXY_PASS;
+    const proxy_host = process.env.PROXY_HOST;
+    const proxy_port = process.env.PROXY_PORT;
     
     return {
       host: proxy_host,
@@ -23,34 +25,22 @@ async function getProxyForPhone(phone) {
   }
 }
 
-// CORS headers
-const corsHeaders = {
-  'Access-Control-Allow-Origin': 'https://www.fairwreck.com',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
-  'Access-Control-Allow-Credentials': 'true',
-};
+// CORS headers middleware
+router.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://www.fairwreck.com');
+  res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  next();
+});
 
-module.exports = async (req, res) => {
-  // Handle preflight
-  if (req.method === 'OPTIONS') {
-    return new Response(null, {
-      status: 204,
-      headers: corsHeaders
-    });
-  }
+// Handle preflight
+router.options('*', (req, res) => {
+  res.status(204).end();
+});
 
-  // Only allow POST
-  if (req.method !== 'POST') {
-    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
-      status: 405,
-      headers: {
-        ...corsHeaders,
-        'Content-Type': 'application/json'
-      }
-    });
-  }
-
+// Handle POST request
+router.post('/submit', async (req, res) => {
   try {
     const { name, email, phone, case: caseDesc, xxTrustedFormCertUrl, tcpaconsent } = req.body;
     const timestamp = new Date().toISOString();
@@ -88,21 +78,11 @@ module.exports = async (req, res) => {
     await transporter.sendMail(mailOptions);
     console.log('Email sent successfully');
     
-    return new Response(JSON.stringify({ success: true, proxyIP }), {
-      status: 200,
-      headers: {
-        ...corsHeaders,
-        'Content-Type': 'application/json'
-      }
-    });
+    res.json({ success: true, proxyIP });
   } catch (err) {
     console.error('Error processing submission:', err);
-    return new Response(JSON.stringify({ success: false, error: err.message }), {
-      status: 500,
-      headers: {
-        ...corsHeaders,
-        'Content-Type': 'application/json'
-      }
-    });
+    res.status(500).json({ success: false, error: err.message });
   }
-}; 
+});
+
+module.exports = router; 
