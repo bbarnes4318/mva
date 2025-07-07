@@ -26,29 +26,13 @@ async function getProxyForPhone(phone) {
   }
 }
 
-// CORS middleware
+// CORS middleware - Allow all origins for now
 router.use((req, res, next) => {
-  // Allow requests from fairwreck.com and any Vercel subdomain
-  const origin = req.headers.origin;
-  const allowedOrigins = [
-    'https://www.fairwreck.com',
-    'https://fairwreck.com',
-    'https://mva.vercel.app',
-    'http://localhost:8080',
-    'http://localhost:3000'
-  ];
-  
-  // Check if origin is from fairwreck.com or a Vercel subdomain
-  const isAllowed = allowedOrigins.includes(origin) || 
-                   (origin && origin.includes('vercel.app'));
-  
-  if (isAllowed || !origin) { // Allow same-origin requests
-    res.setHeader('Access-Control-Allow-Origin', origin || '*');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-  }
-
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  // Allow all origins
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS, GET');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
   next();
 });
 
@@ -116,25 +100,10 @@ module.exports = router;
 
 // For Vercel serverless function compatibility
 module.exports.default = async (req, res) => {
-  // Allow requests from fairwreck.com and any Vercel subdomain
-  const origin = req.headers.origin;
-  const allowedOrigins = [
-    'https://www.fairwreck.com',
-    'https://fairwreck.com',
-    'https://mva.vercel.app'
-  ];
-  
-  // Check if origin is from fairwreck.com or a Vercel subdomain
-  const isAllowed = allowedOrigins.includes(origin) || 
-                   (origin && origin.includes('vercel.app'));
-  
-  if (isAllowed) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-  }
-
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  // Set CORS headers for Vercel
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS, GET');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
   // Handle preflight requests
   if (req.method === 'OPTIONS') {
