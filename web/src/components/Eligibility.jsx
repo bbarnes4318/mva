@@ -37,9 +37,14 @@ const Eligibility = () => {
     const tfUrl = formRef.current ? formRef.current["xxTrustedFormCertUrl"]?.value : '';
     const tcpaconsent = formRef.current ? formRef.current["tcpaconsent"]?.checked : false;
     try {
-      const response = await fetch('/api/submit', {
+      const apiUrl = window.location.origin + '/api/submit';
+      console.log('Making request to:', apiUrl);
+      const response = await fetch(apiUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
         body: JSON.stringify({ ...form, xxTrustedFormCertUrl: tfUrl, tcpaconsent })
       });
       const data = await response.json();
@@ -55,6 +60,7 @@ const Eligibility = () => {
         alert('Submission failed. Please try again.');
       }
     } catch (err) {
+      console.error('Fetch error:', err);
       setSubmitted(false);
       alert('Submission failed. Please try again.');
     }

@@ -8,6 +8,13 @@ export default defineConfig({
     force: true,
     hmr: {
       overlay: true
+    },
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        secure: false
+      }
     }
   },
   build: {
