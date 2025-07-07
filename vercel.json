@@ -2,11 +2,8 @@
   "version": 2,
   "builds": [
     {
-      "src": "web/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
+      "src": "web/index.html",
+      "use": "@vercel/static"
     },
     {
       "src": "api/submit.js",
@@ -19,8 +16,12 @@
       "dest": "/api/submit.js"
     },
     {
+      "src": "/",
+      "dest": "/web/index.html"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/web/dist/$1"
+      "dest": "/web/$1"
     }
   ]
 } 
