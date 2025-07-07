@@ -6,8 +6,6 @@ const consentText = {
   es: `Al marcar esta casilla, doy mi consentimiento para recibir llamadas de marketing, mensajes de texto y correos electrónicos de Fair Wreck en la información de contacto que he proporcionado, utilizando sistemas de marcación automática, mensajes pregrabados y tecnologías de voz artificial. Certifico que soy el suscriptor (o usuario habitual) del número de teléfono que he proporcionado; mi consentimiento no es una condición de compra; pueden aplicarse tarifas de mensajes y datos; puedo revocar este consentimiento en cualquier momento respondiendo "STOP" a los mensajes de texto o enviando un correo electrónico a support@fairwreck.com para llamadas; consulte la <a href="/privacy" target="_blank">Política de Privacidad</a> y los <a href="/terms" target="_blank">Términos y Condiciones</a>.`
 };
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-
 const Eligibility = () => {
   const { t, language } = useContext(LanguageContext);
   const [form, setForm] = useState({ name: '', email: '', phone: '', case: '' });
@@ -39,7 +37,7 @@ const Eligibility = () => {
     const tfUrl = formRef.current ? formRef.current["xxTrustedFormCertUrl"]?.value : '';
     const tcpaconsent = formRef.current ? formRef.current["tcpaconsent"]?.checked : false;
     try {
-      const response = await fetch(`${API_URL}/api/submit`, {
+      const response = await fetch('/api/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...form, xxTrustedFormCertUrl: tfUrl, tcpaconsent })
