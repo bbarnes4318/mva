@@ -100,14 +100,15 @@ module.exports = router;
 
 // For Vercel serverless function compatibility
 module.exports.default = async (req, res) => {
-  // Set CORS headers for Vercel
+  // Set comprehensive CORS headers for Vercel
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS, GET');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Accept, X-Requested-With');
+  res.setHeader('Access-Control-Allow-Credentials', 'false');
 
   // Handle preflight requests
   if (req.method === 'OPTIONS') {
-    res.status(204).end();
+    res.status(200).end();
     return;
   }
 
@@ -120,6 +121,9 @@ module.exports.default = async (req, res) => {
   try {
     const { name, email, phone, case: caseDesc, xxTrustedFormCertUrl, tcpaconsent } = req.body;
     const timestamp = new Date().toISOString();
+    
+    console.log(`${timestamp} - Vercel POST /api/submit`);
+    console.log('Request body:', req.body);
     
     // Get proxy IP based on phone area code
     const proxyDetails = await getProxyForPhone(phone);
