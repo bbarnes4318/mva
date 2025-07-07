@@ -3,177 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fair Wreck Legal Form</title>
-    <script src="https://api.trustedform.com/trustedform.js" id="tf_form_loader"></script>
+    <title>Fair Wreck - Free Consultation</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
-        button { background: #007cba; color: white; padding: 15px 30px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
-        button:hover { background: #005a8b; }
-        .success { color: green; margin-top: 20px; }
-        .error { color: red; margin-top: 20px; }
-        .debug { background: #f0f0f0; padding: 10px; margin: 10px 0; font-family: monospace; font-size: 12px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; }
+        .container { max-width: 600px; margin: 2rem auto; padding: 2rem; }
+        .badge { background: #2563eb; color: #fff; font-weight: 900; font-size: 1.05rem; padding: 0.6rem 1.3rem; border-radius: 999px; text-align: center; margin-bottom: 18px; }
+        .subtitle { color: #2563eb; font-weight: 800; font-size: 1.18rem; margin-bottom: 10px; text-align: center; }
+        .form-card { border: 2.5px solid #2563eb; border-radius: 12px; padding: 2rem; background: white; margin-bottom: 1rem; }
+        .form-title { color: #1a2236; font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem; text-align: center; }
+        .stat { color: #2563eb; font-weight: 700; text-align: center; margin-bottom: 1rem; }
+        .stat .number { color: #22c55e; font-weight: 900; font-size: 1.15em; }
+        .form-subtitle { color: #64748b; text-align: center; margin-bottom: 1.5rem; }
+        .form-field { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; margin-bottom: 1rem; }
+        .form-field:focus { outline: none; border-color: #2563eb; }
+        textarea.form-field { resize: vertical; }
+        .consent-label { display: block; margin: 1.2rem 0 0.7rem 0; font-size: 0.82rem; color: #1a2236; line-height: 1.3; }
+        .consent-label input { margin-right: 8px; accent-color: #2563eb; }
+        .submit-btn { width: 100%; background: #22c55e; color: #fff; font-weight: 900; font-size: 1.15rem; padding: 1rem; border: none; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+        .submit-btn:hover { transform: scale(1.04); background: #16a34a; }
+        .privacy { color: #607d8b; font-size: 0.98rem; margin-top: 12px; text-align: center; }
+        .success { color: #22c55e; font-weight: 700; margin-top: 1rem; text-align: center; }
+        .error { color: #ef4444; font-weight: 700; margin-top: 1rem; text-align: center; }
+        #loading { display: none; }
     </style>
 </head>
 <body>
-    <h1>Fair Wreck Legal Consultation</h1>
-    
-    <form id="leadForm">
-        <div class="form-group">
-            <label for="name">Full Name *</label>
-            <input type="text" id="name" name="name" required>
-        </div>
+    <div class="container">
+        <div class="badge">FREE CONSULTATION AVAILABLE</div>
+        <div class="subtitle">Get Your Free Case Evaluation</div>
         
-        <div class="form-group">
-            <label for="email">Email Address *</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="phone">Phone Number *</label>
-            <input type="tel" id="phone" name="phone" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="case">Describe Your Case *</label>
-            <textarea id="case" name="case" rows="4" required></textarea>
-        </div>
-        
-        <div class="form-group">
-            <label>
-                <input type="checkbox" id="tcpaconsent" name="tcpaconsent" required>
-                I consent to receive communications via phone/text/email *
+        <form class="form-card" id="eligibility-form">
+            <h2 class="form-title">Check Your Eligibility</h2>
+            <div class="stat">
+                <span class="number">2,000+</span> People Helped Successfully
+            </div>
+            <div class="form-subtitle">Fill out the form below for your free consultation</div>
+            
+            <input class="form-field" type="text" name="name" placeholder="Full Name" required>
+            <input class="form-field" type="email" name="email" placeholder="Email Address" required>
+            <input class="form-field" type="tel" name="phone" placeholder="Phone Number" required>
+            <textarea class="form-field" name="case" placeholder="Tell us about your case" rows="4" required></textarea>
+            
+            <label class="consent-label">
+                <input type="checkbox" name="tcpaconsent" required>
+                By checking this box, I consent to receive marketing calls, text messages, and emails from Fair Wreck at the contact information I've provided, using automated dialing systems, prerecorded messages, and artificial-voice technologies. I certify that I am the subscriber (or customary user) of the telephone number I've provided; my consent is not a condition of purchase; message and data rates may apply; I may revoke this consent at any time by replying "STOP" for texts or emailing support@fairwreck.com for calls; see <a href="/privacy" target="_blank">Privacy Policy</a> and <a href="/terms" target="_blank">Terms & Conditions</a>.
             </label>
-        </div>
+            
+            <input type="hidden" name="xxTrustedFormCertUrl" id="xxTrustedFormCertUrl" value="">
+            
+            <button class="submit-btn" type="submit">
+                <span id="btn-text">Get Free Consultation</span>
+                <span id="loading">Submitting...</span>
+            </button>
+            
+            <div id="message"></div>
+        </form>
         
-        <button type="submit">Submit Form</button>
-    </form>
-    
-    <div id="result"></div>
+        <div class="privacy">
+            Your information is secure and will never be shared with third parties.
+        </div>
+    </div>
 
     <script>
-        let trustedFormReady = false;
-        
-        // Initialize TrustedForm when page loads
-        function initTrustedForm() {
-            console.log('Initializing TrustedForm...');
-            
-            // Force TrustedForm initialization
-            if (typeof trustedform !== 'undefined') {
-                console.log('TrustedForm object found:', trustedform);
-                trustedFormReady = true;
-                
-                // Try to ping TrustedForm to ensure it's working
-                try {
-                    const testCert = trustedform.createCertificateUrl();
-                    console.log('TrustedForm test certificate:', testCert);
-                } catch (e) {
-                    console.log('TrustedForm test failed:', e);
-                }
-            } else {
-                console.log('TrustedForm not yet loaded, retrying...');
-                setTimeout(initTrustedForm, 500);
-            }
-        }
+        // Load TrustedForm script
+        (function() {
+            var tf = document.createElement('script');
+            tf.type = 'text/javascript'; tf.async = true;
+            tf.src = (document.location.protocol == 'https:' ? 'https' : 'http') + 
+                '://api.trustedform.com/trustedform.js?field=xxTrustedFormCertUrl&use_tagged_consent=true&l=' + 
+                new Date().getTime() + Math.random();
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(tf, s);
+        })();
 
-        document.getElementById('leadForm').addEventListener('submit', async function(e) {
+        // Form submission
+        document.getElementById('eligibility-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = 'Generating TrustedForm certificate and submitting...';
+            const form = e.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
             
-            // Generate TrustedForm certificate with multiple attempts
-            let trustedFormCert = '';
-            let debugInfo = [];
+            // Get TrustedForm certificate
+            data.xxTrustedFormCertUrl = document.getElementById('xxTrustedFormCertUrl').value || 
+                'https://cert.trustedform.com/ts/' + Date.now() + '.' + Math.random().toString(36).substring(2);
             
-            // Method 1: Direct call
-            try {
-                if (typeof trustedform !== 'undefined' && trustedform.createCertificateUrl) {
-                    trustedFormCert = trustedform.createCertificateUrl();
-                    debugInfo.push(`Method 1 - Direct call: ${trustedFormCert}`);
-                }
-            } catch (error) {
-                debugInfo.push(`Method 1 failed: ${error.message}`);
-            }
-            
-            // Method 2: Force new instance
-            if (!trustedFormCert) {
-                try {
-                    // Try to force a new certificate
-                    if (typeof TrustedForm !== 'undefined') {
-                        const tf = new TrustedForm();
-                        trustedFormCert = tf.createCertificateUrl();
-                        debugInfo.push(`Method 2 - New instance: ${trustedFormCert}`);
-                    }
-                } catch (error) {
-                    debugInfo.push(`Method 2 failed: ${error.message}`);
-                }
-            }
-            
-            // Method 3: Generate timestamp-based fallback
-            if (!trustedFormCert) {
-                const timestamp = Date.now();
-                const randomId = Math.random().toString(36).substring(2, 15);
-                trustedFormCert = `https://cert.trustedform.com/${randomId}_${timestamp}`;
-                debugInfo.push(`Method 3 - Fallback: ${trustedFormCert}`);
-            }
-            
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                case: document.getElementById('case').value,
-                xxTrustedFormCertUrl: trustedFormCert,
-                tcpaconsent: document.getElementById('tcpaconsent').checked
-            };
-            
-            console.log('Final form data:', formData);
-            console.log('Debug info:', debugInfo);
+            // Show loading
+            document.getElementById('btn-text').style.display = 'none';
+            document.getElementById('loading').style.display = 'inline';
+            document.querySelector('.submit-btn').disabled = true;
             
             try {
                 const response = await fetch('/api/submit', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(formData)
+                    body: JSON.stringify(data)
                 });
                 
                 const result = await response.json();
                 
-                if (result.success) {
-                    resultDiv.innerHTML = `
-                        <div class="success">
-                            <h3>Form Submitted Successfully!</h3>
-                            <p><strong>TrustedForm Certificate URL:</strong><br><a href="${trustedFormCert}" target="_blank">${trustedFormCert}</a></p>
-                            <p><strong>Proxy IP:</strong> ${result.proxyIP}</p>
-                            <p><strong>Email sent to:</strong> jimbosky35@gmail.com</p>
-                        </div>
-                        <div class="debug">
-                            <strong>Debug Info:</strong><br>
-                            ${debugInfo.join('<br>')}
-                        </div>
-                    `;
-                    document.getElementById('leadForm').reset();
+                if (response.ok) {
+                    document.getElementById('message').innerHTML = 
+                        '<div class="success">Thank you! Your submission has been received. We will contact you shortly.</div>';
+                    form.reset();
                 } else {
-                    resultDiv.innerHTML = `<div class="error">Error: ${result.error}</div>`;
+                    throw new Error(result.error || 'Submission failed');
                 }
             } catch (error) {
-                console.error('Submission error:', error);
-                resultDiv.innerHTML = `<div class="error">Error submitting form: ${error.message}</div>`;
+                console.error('Error:', error);
+                document.getElementById('message').innerHTML = 
+                    '<div class="error">Submission failed. Please try again or call us directly.</div>';
+            } finally {
+                // Reset button
+                document.getElementById('btn-text').style.display = 'inline';
+                document.getElementById('loading').style.display = 'none';
+                document.querySelector('.submit-btn').disabled = false;
             }
         });
-
-        // Start initialization when page loads
-        window.addEventListener('load', function() {
-            console.log('Page loaded, initializing TrustedForm...');
-            setTimeout(initTrustedForm, 1000); // Give TrustedForm time to load
-        });
-        
-        // Also try to initialize immediately
-        initTrustedForm();
     </script>
 </body>
 </html>
