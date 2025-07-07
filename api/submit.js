@@ -1,7 +1,8 @@
 const express = require('express');
-const router = express.Router();
 const nodemailer = require('nodemailer');
 require('dotenv').config();
+
+const router = express.Router();
 
 // Function to get proxy based on phone area code
 async function getProxyForPhone(phone) {
@@ -25,22 +26,128 @@ async function getProxyForPhone(phone) {
   }
 }
 
-// CORS headers middleware
+// CORS middleware
 router.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://www.fairwreck.com');
-  res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  res.header('Access-Control-Allow-Credentials', 'true');
+  // Allow requests from fairwreck.com and any Vercel subdomain
+  const origin = req.headers.origin;
+  const allowedOrigins = [
+    'https://www.fairwreck.com',
+    'https://fairwreck.com',
+    'https://mva.vercel.app',
+    'http://localhost:8080',
+    'http://localhost:3000'
+  ];
+  
+  // Check if origin is from fairwreck.com or a Vercel subdomain
+  const isAllowed = allowedOrigins.includes(origin) || 
+                   (origin && origin.includes('vercel.app'));
+  
+  if (isAllowed || !origin) { // Allow same-origin requests
+    res.setHeader('Access-Control-Allow-Origin', origin || '*');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+  }
+
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
 
-// Handle preflight
-router.options('*', (req, res) => {
+// Handle preflight requests
+router.options('/submit', (req, res) => {
   res.status(204).end();
 });
 
-// Handle POST request
+// Main submit endpoint
 router.post('/submit', async (req, res) => {
+  try {
+    const { name, email, phone, case: caseDesc, xxTrustedFormCertUrl, tcpaconsent } = req.body;
+    const timestamp = new Date().toISOString();
+    
+    console.log(`${timestamp} - POST /api/submit`);
+    console.log('=== FORM SUBMISSION START ===');
+    console.log('Request body:', req.body);
+    
+    // Get proxy IP based on phone area code
+    console.log(`Getting proxy for phone: ${phone}`);
+    const proxyDetails = await getProxyForPhone(phone);
+    console.log('Proxy details:', proxyDetails);
+    const proxyIP = proxyDetails ? `${proxyDetails.host}:${proxyDetails.port}` : 'No proxy available';
+    
+    console.log('Sending email...');
+    
+    // Send email
+    const transporter = nodemailer.createTransporter({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: 'jimbosky35@gmail.com',
+      subject: 'New Fair Wreck Lead',
+      html: `<h2>New Lead Submission</h2>
+        <ul>
+          <li><b>Name:</b> ${name || ''}</li>
+          <li><b>Email:</b> ${email || ''}</li>
+          <li><b>Phone:</b> ${phone || ''}</li>
+          <li><b>Case:</b> ${caseDesc || ''}</li>
+          <li><b>TCPA Consent:</b> ${tcpaconsent ? 'Yes' : 'No'}</li>
+          <li><b>TrustedForm Certificate URL:</b> <a href="${xxTrustedFormCertUrl || ''}">${xxTrustedFormCertUrl || ''}</a></li>
+          <li><b>Proxy IP:</b> ${proxyIP}</li>
+        </ul>
+        <p>Timestamp: ${timestamp}</p>`
+    };
+    
+    await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully');
+    console.log('=== FORM SUBMISSION COMPLETE ===');
+    
+    res.json({ success: true, proxyIP });
+  } catch (err) {
+    console.error('Error processing submission:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+module.exports = router;
+
+// For Vercel serverless function compatibility
+module.exports.default = async (req, res) => {
+  // Allow requests from fairwreck.com and any Vercel subdomain
+  const origin = req.headers.origin;
+  const allowedOrigins = [
+    'https://www.fairwreck.com',
+    'https://fairwreck.com',
+    'https://mva.vercel.app'
+  ];
+  
+  // Check if origin is from fairwreck.com or a Vercel subdomain
+  const isAllowed = allowedOrigins.includes(origin) || 
+                   (origin && origin.includes('vercel.app'));
+  
+  if (isAllowed) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+  }
+
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    res.status(204).end();
+    return;
+  }
+
+  // Only handle POST requests
+  if (req.method !== 'POST') {
+    res.status(405).json({ error: 'Method not allowed' });
+    return;
+  }
+
   try {
     const { name, email, phone, case: caseDesc, xxTrustedFormCertUrl, tcpaconsent } = req.body;
     const timestamp = new Date().toISOString();
@@ -50,7 +157,7 @@ router.post('/submit', async (req, res) => {
     const proxyIP = proxyDetails ? `${proxyDetails.host}:${proxyDetails.port}` : 'No proxy available';
     
     // Send email
-    const transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransporter({
       service: 'gmail',
       auth: {
         user: process.env.EMAIL_USER,
@@ -83,6 +190,4 @@ router.post('/submit', async (req, res) => {
     console.error('Error processing submission:', err);
     res.status(500).json({ success: false, error: err.message });
   }
-});
-
-module.exports = router; 
+}; 

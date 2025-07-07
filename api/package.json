@@ -1,0 +1,9 @@
+{
+  "name": "mva-api",
+  "version": "1.0.0",
+  "main": "submit.js",
+  "dependencies": {
+    "nodemailer": "^7.0.3",
+    "dotenv": "^16.5.0"
+  }
+} 

@@ -8,9 +8,12 @@ services:
   dockerfile_path: Dockerfile
   http_port: 8080
   instance_count: 1
-  instance_size_slug: basic-xs
+  instance_size_slug: apps-s-2vcpu-2gb
   buildpacks:
     - name: nodejs
+  features:
+    - name: buildpack-stack
+      value: ubuntu-22
   envs:
   - key: NODE_ENV
     value: production

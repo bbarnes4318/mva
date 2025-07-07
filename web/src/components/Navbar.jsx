@@ -17,7 +17,7 @@ const Navbar = () => {
             <span role="img" aria-label="Phone">📞</span> {t('navbar.freeConsult')}
           </a>
           <button onClick={() => setLanguage(language === 'es' ? 'en' : 'es')} style={{ marginLeft: 24, fontWeight: 700, fontSize: '1.05rem', border: 'none', background: 'none', color: '#2563eb', cursor: 'pointer', padding: '0.4rem 1.1rem', borderRadius: 8, transition: 'background 0.2s' }} aria-label="Switch language">
-            {language === 'es' ? 'EN' : 'ES'}
+            {language === 'en' ? 'ES' : 'EN'}
           </button>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Navbar from './Navbar';
 import { Link } from 'react-router-dom';
 import { LanguageContext } from '../language.jsx';
@@ -59,9 +59,8 @@ const content = {
 };
 
 const Terms = () => {
-  const { language } = useContext(LanguageContext);
-  const [lang, setLang] = useState(language);
-  const t = content[lang];
+  const { language, setLanguage } = useContext(LanguageContext);
+  const t = content[language];
 
   return (
     <div style={{ minHeight: '100vh', background: '#f7fafc' }}>
@@ -69,7 +68,7 @@ const Terms = () => {
       <div style={{ maxWidth: 1300, margin: '0 auto', padding: '4rem 2rem', fontFamily: 'Inter, Arial, Helvetica, sans-serif', color: '#1a2236' }}>
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 8 }}>
           <button
-            onClick={() => setLang(lang === 'es' ? 'en' : 'es')}
+            onClick={() => setLanguage(language === 'es' ? 'en' : 'es')}
             style={{ fontWeight: 700, fontSize: '1.05rem', border: 'none', background: 'none', color: '#2563eb', cursor: 'pointer', padding: '0.4rem 1.1rem', borderRadius: 8, transition: 'background 0.2s' }}
             aria-label="Switch language"
           >

@@ -3,13 +3,13 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Install build dependencies
-RUN apk add --no-cache wget
+RUN apk add --no-cache wget python3 make g++
 
 # Copy package files first to leverage Docker cache
 COPY package*.json ./
 
 # Install dependencies
-RUN npm ci
+RUN npm ci --production
 
 # Copy the rest of the application
 COPY . .
