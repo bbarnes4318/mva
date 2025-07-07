@@ -2,10 +2,6 @@
   "version": 2,
   "builds": [
     {
-      "src": "web/index.html",
-      "use": "@vercel/static"
-    },
-    {
       "src": "api/submit.js",
       "use": "@vercel/node"
     }
@@ -16,12 +12,8 @@
       "dest": "/api/submit.js"
     },
     {
-      "src": "/",
-      "dest": "/web/index.html"
-    },
-    {
       "src": "/(.*)",
-      "dest": "/web/$1"
+      "dest": "/web/index.html"
     }
   ]
 } 
