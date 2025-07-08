@@ -9,11 +9,6 @@ services:
   http_port: 8080
   instance_count: 1
   instance_size_slug: apps-s-2vcpu-2gb
-  buildpacks:
-    - name: nodejs
-  features:
-    - name: buildpack-stack
-      value: ubuntu-22
   envs:
   - key: NODE_ENV
     value: production
@@ -21,9 +16,6 @@ services:
   - key: PORT
     value: "8080"
     scope: RUN_AND_BUILD_TIME
-  - type: SECRET
-    key: DATABASE_URL
-    value: ${db.DATABASE_URL}
   - type: SECRET
     key: EMAIL_USER
     value: ${EMAIL_USER}
