@@ -6,7 +6,7 @@ services:
     repo: bbarnes4318/mva
     branch: main
   build_command: npm run build
-  run_command: npm run preview
+  run_command: npm run preview -- --host 0.0.0.0
   environment_slug: node-js
   instance_count: 1
   instance_size_slug: basic-xxs
