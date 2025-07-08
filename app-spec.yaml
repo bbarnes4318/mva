@@ -1,0 +1,25 @@
+name: mva-full-stack
+services:
+- name: frontend
+  source_dir: /web
+  github:
+    repo: bbarnes4318/mva
+    branch: main
+  build_command: npm run build
+  run_command: npm run preview
+  environment_slug: node-js
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  http_port: 4173
+  routes:
+  - path: /
+- name: backend
+  github:
+    repo: bbarnes4318/mva
+    branch: main
+  dockerfile_path: Dockerfile.backend
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  http_port: 8000
+  routes:
+  - path: /api 
