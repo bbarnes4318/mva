@@ -17,6 +17,24 @@ export default defineConfig({
       }
     }
   },
+  preview: {
+    host: '0.0.0.0',
+    port: 4173,
+    allowedHosts: [
+      'mva-full-stack-lnp4f.ondigitalocean.app',
+      'fairwreck.com',
+      'www.fairwreck.com',
+      'localhost',
+      '127.0.0.1'
+    ],
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        secure: false
+      }
+    }
+  },
   build: {
     sourcemap: true,
     rollupOptions: {
