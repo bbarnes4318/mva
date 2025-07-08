@@ -7,7 +7,7 @@ const Navbar = () => {
     <nav className="navbar" style={{ background: '#fff', width: '100vw', left: 0, right: 0, position: 'relative', boxShadow: '0 2px 12px 0 rgba(60,72,88,0.07)', zIndex: 100 }}>
       <div className="container" style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', maxWidth: 1200, width: '100%', margin: '0 auto', padding: '0 24px', minHeight: 0, height: 80}}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <img src="./fw-logo.png" alt="Logo" style={{ height: 160, width: 'auto', display: 'block' }} />
+          <img src="/fw-logo.png" alt="Logo" style={{ height: 160, width: 'auto', display: 'block' }} />
         </div>
         <div className="navbar-links" style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
           <a href="/#services">{t('navbar.services')}</a>

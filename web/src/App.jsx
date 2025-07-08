@@ -5,7 +5,6 @@ import Services from './components/Services';
 import Process from './components/Process';
 import Testimonials from './components/Testimonials';
 import CTA from './components/CTA';
-import Contact from './components/Contact';
 import Footer from './components/Footer';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Terms from './components/Terms';
@@ -34,7 +33,6 @@ function HomeWithScroll() {
       <div className="section" id="testimonials"><Testimonials /></div>
       <div className="section"><Eligibility /></div>
       <div className="section section-bg-blue"><CTA /></div>
-      <Contact />
       <Footer />
     </div>
   );

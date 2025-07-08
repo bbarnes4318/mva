@@ -8,7 +8,7 @@ const consentText = {
 
 const Eligibility = () => {
   const { t, language } = useContext(LanguageContext);
-  const [form, setForm] = useState({ name: '', email: '', phone: '', case: '' });
+  const [form, setForm] = useState({ phone: '' });
   const [submitted, setSubmitted] = useState(false);
   const formRef = useRef(null);
 
@@ -50,11 +50,11 @@ const Eligibility = () => {
       const data = await response.json();
       if (response.ok) {
         setSubmitted(true);
-        setForm({ name: '', email: '', phone: '', case: '' }); // Clear form
+        setForm({ phone: '' }); // Clear form
         if (formRef.current) {
           formRef.current.reset(); // Reset form including checkboxes
         }
-        alert('Thank you! Your submission has been received.');
+        alert('Thank you! We will call you within 24 hours.');
       } else {
         setSubmitted(false);
         alert('Submission failed. Please try again.');
@@ -72,50 +72,24 @@ const Eligibility = () => {
         {t('eligibility.badge')}
       </div>
       <div style={{ color: '#2563eb', fontWeight: 800, fontSize: '1.18rem', marginBottom: 10, textAlign: 'center' }}>
-        {t('eligibility.subtitle')}
+        Get Your Free Consultation - We'll Call You!
       </div>
       <form className="eligibility-form-card" onSubmit={handleSubmit} ref={formRef} id="eligibility-form" style={{ border: '2.5px solid #2563eb', boxShadow: '0 8px 32px 0 rgba(37,99,235,0.10)' }}>
-        <h2 className="eligibility-form-title">{t('eligibility.title')}</h2>
+        <h2 className="eligibility-form-title">Get Your Free Case Review</h2>
         <div className="people-helped-stat" style={{ color: '#2563eb', fontWeight: 700 }}>
           <span style={{ color: '#22c55e', fontWeight: 900, fontSize: '1.15em' }}>2,000+</span> {t('eligibility.helped')}
         </div>
-        <div className="eligibility-form-subtitle">{t('eligibility.formSubtitle')}</div>
+        <div className="eligibility-form-subtitle">Enter your phone number and we'll call you within 24 hours for your free consultation.</div>
         <div className="eligibility-form-fields">
-          <input
-            className="eligibility-form-field"
-            type="text"
-            name="name"
-            placeholder={t('eligibility.name')}
-            value={form.name}
-            onChange={handleChange}
-            required
-          />
-          <input
-            className="eligibility-form-field"
-            type="email"
-            name="email"
-            placeholder={t('eligibility.email')}
-            value={form.email}
-            onChange={handleChange}
-            required
-          />
           <input
             className="eligibility-form-field"
             type="tel"
             name="phone"
-            placeholder={t('eligibility.phone')}
+            placeholder="Your Phone Number"
             value={form.phone}
             onChange={handleChange}
             required
-          />
-          <textarea
-            className="eligibility-form-field"
-            name="case"
-            placeholder={t('eligibility.case')}
-            value={form.case}
-            onChange={handleChange}
-            rows={4}
-            required
+            style={{ fontSize: '1.1rem', padding: '1rem' }}
           />
         </div>
         {/* TrustedForm Consent Checkbox */}
@@ -125,18 +99,18 @@ const Eligibility = () => {
         </label>
         {/* TrustedForm hidden field will be injected by SDK */}
         <button className="eligibility-form-submit eligibility-green-cta" type="submit" style={{ background: '#22c55e', color: '#fff', fontWeight: 900, fontSize: '1.15rem', boxShadow: '0 6px 32px 0 rgba(34,197,94,0.18)', border: 'none' }}>
-          {t('eligibility.button')}
+          Get My Free Call Now
         </button>
-        {submitted && <div style={{ color: '#22c55e', marginTop: '1rem', fontWeight: 700 }}>{t('eligibility.thankyou')}</div>}
+        {submitted && <div style={{ color: '#22c55e', marginTop: '1rem', fontWeight: 700 }}>Thank you! We'll call you within 24 hours.</div>}
       </form>
       <div style={{ color: '#607d8b', fontSize: '0.98rem', marginTop: 12, textAlign: 'center' }}>
-        {t('eligibility.privacy')}
+        100% Free Consultation - No Obligation
       </div>
       <button className="sticky-cta-btn" onClick={() => {
         const el = document.getElementById('eligibility-form');
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }}>
-        <span role="img" aria-label="Phone">📞</span> {t('eligibility.sticky')}
+        <span role="img" aria-label="Phone">📞</span> Get My Free Call
       </button>
       <style>{`
         .eligibility-green-cta:hover {
