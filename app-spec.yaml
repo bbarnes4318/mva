@@ -1,5 +1,15 @@
 name: mva-full-stack
 services:
+- name: backend
+  github:
+    repo: bbarnes4318/mva
+    branch: main
+  dockerfile_path: Dockerfile.backend
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  http_port: 8000
+  routes:
+  - path: /api
 - name: frontend
   source_dir: /web
   github:
@@ -15,14 +25,4 @@ services:
   - key: VITE_CACHE_BUST
     value: "20250708"
   routes:
-  - path: /
-- name: backend
-  github:
-    repo: bbarnes4318/mva
-    branch: main
-  dockerfile_path: Dockerfile.backend
-  instance_count: 1
-  instance_size_slug: basic-xxs
-  http_port: 8000
-  routes:
-  - path: /api 
+  - path: / 
