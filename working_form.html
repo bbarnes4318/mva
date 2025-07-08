@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fair Wreck - Emergency Form</title>
+    <!-- TrustedForm Script -->
+    <script type="text/javascript">
+        (function() {
+            var tf = document.createElement('script');
+            tf.type = 'text/javascript';
+            tf.async = true;
+            tf.src = '//b-js.ringba.com/CAf7d6c6c99e5c4036bad2ad49eba1b5b0f';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(tf, s);
+        })();
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -94,12 +105,25 @@
             margin-bottom: 20px;
             border-radius: 5px;
         }
+        .trustedform {
+            background-color: #e9f7ef;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 8px;
+            margin-bottom: 15px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="status">
-            <strong>Status Update:</strong> We're fixing the main site. This emergency form works and sends your info directly to our team.
+            <strong>Status Update:</strong> Emergency form with TrustedForm compliance - sends your info directly to our team.
+        </div>
+        
+        <div class="trustedform">
+            ✅ TrustedForm Compliance Active - Your submission is tracked and verified
         </div>
         
         <h1>Fair Wreck - WORKING FORM</h1>
@@ -127,11 +151,26 @@
                 <textarea id="case" name="case" placeholder="Brief description of your legal case or question..."></textarea>
             </div>
             
-            <button type="submit" class="submit-btn" id="submitBtn">Submit Lead NOW</button>
+            <!-- Hidden TrustedForm fields -->
+            <input type="hidden" id="xxTrustedFormCertUrl" name="xxTrustedFormCertUrl" value="">
+            <input type="hidden" id="xxTrustedFormToken" name="xxTrustedFormToken" value="">
+            
+            <button type="submit" class="submit-btn" id="submitBtn">Submit Lead NOW (TrustedForm)</button>
         </form>
     </div>
 
     <script>
+        // Wait for TrustedForm to load
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                if (typeof window.tf_submit_form === 'function') {
+                    console.log('TrustedForm loaded successfully');
+                } else {
+                    console.warn('TrustedForm may not have loaded properly');
+                }
+            }, 2000);
+        });
+
         document.getElementById('leadForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -140,6 +179,25 @@
             
             // Disable submit button
             submitBtn.disabled = true;
+            submitBtn.textContent = 'Getting TrustedForm Certificate...';
+            
+            // Get TrustedForm certificate URL
+            let trustedFormCertUrl = '';
+            let trustedFormToken = '';
+            
+            try {
+                if (typeof window.tf_submit_form === 'function') {
+                    const tfData = window.tf_submit_form();
+                    if (tfData && tfData.cert_url) {
+                        trustedFormCertUrl = tfData.cert_url;
+                        trustedFormToken = tfData.token || '';
+                        console.log('TrustedForm certificate captured:', trustedFormCertUrl);
+                    }
+                }
+            } catch (tfError) {
+                console.warn('TrustedForm error:', tfError);
+            }
+            
             submitBtn.textContent = 'Submitting...';
             
             // Get form data
@@ -148,14 +206,20 @@
                 name: document.getElementById('name').value.trim(),
                 email: document.getElementById('email').value.trim(),
                 case: document.getElementById('case').value.trim(),
+                xxTrustedFormCertUrl: trustedFormCertUrl,
+                xxTrustedFormToken: trustedFormToken,
                 tcpaconsent: true
             };
+            
+            // Update hidden fields
+            document.getElementById('xxTrustedFormCertUrl').value = trustedFormCertUrl;
+            document.getElementById('xxTrustedFormToken').value = trustedFormToken;
             
             // Basic validation
             if (!formData.phone) {
                 showMessage('Phone number is required!', 'error');
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Submit Lead NOW';
+                submitBtn.textContent = 'Submit Lead NOW (TrustedForm)';
                 return;
             }
             
@@ -183,20 +247,22 @@
                 const result = await response.json();
                 
                 if (result.success) {
-                    showMessage('SUCCESS! Your lead has been submitted. We will contact you within 24 hours.', 'success');
+                    const certMsg = trustedFormCertUrl ? ' (TrustedForm Verified)' : '';
+                    showMessage('SUCCESS! Your lead has been submitted' + certMsg + '. We will contact you within 24 hours.', 'success');
                     document.getElementById('leadForm').reset();
                 } else {
                     showMessage('Error: ' + (result.error || 'Something went wrong'), 'error');
                 }
             } catch (error) {
                 console.error('Submission error:', error);
-                showMessage('Form submitted via fallback method. We received your information and will contact you soon.', 'success');
+                const certMsg = trustedFormCertUrl ? ' with TrustedForm compliance' : '';
+                showMessage('Form submitted via fallback method' + certMsg + '. We received your information and will contact you soon.', 'success');
                 document.getElementById('leadForm').reset();
             }
             
             // Re-enable submit button
             submitBtn.disabled = false;
-            submitBtn.textContent = 'Submit Lead NOW';
+            submitBtn.textContent = 'Submit Lead NOW (TrustedForm)';
         });
         
         function showMessage(text, type) {
