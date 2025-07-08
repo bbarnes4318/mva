@@ -1,4 +1,10 @@
 name: mva-full-stack
+domains:
+- domain: fairwreck.com
+  type: PRIMARY
+- domain: www.fairwreck.com
+  type: ALIAS
+  wildcard: false
 services:
 - name: backend
   github:
