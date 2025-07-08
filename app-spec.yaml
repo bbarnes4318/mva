@@ -1,3 +1,4 @@
+# Deployment timestamp: 2025-01-13 19:30 UTC - Force redeploy with fixed environment variables
 name: mva-full-stack
 domains:
 - domain: fairwreck.com
