@@ -11,6 +11,9 @@ services:
   instance_count: 1
   instance_size_slug: basic-xxs
   http_port: 4173
+  envs:
+  - key: VITE_CACHE_BUST
+    value: "20250708"
   routes:
   - path: /
 - name: backend
