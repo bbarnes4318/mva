@@ -37,7 +37,7 @@ const Eligibility = () => {
     const tfUrl = formRef.current ? formRef.current["xxTrustedFormCertUrl"]?.value : '';
     const tcpaconsent = formRef.current ? formRef.current["tcpaconsent"]?.checked : false;
     try {
-      const apiUrl = window.location.origin + '/api/submit';
+      const apiUrl = '/api/submit';
       console.log('Making request to:', apiUrl);
       const response = await fetch(apiUrl, {
         method: 'POST',

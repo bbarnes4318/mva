@@ -6,19 +6,9 @@ const consentText = {
   es: `Al marcar esta casilla, doy mi consentimiento para recibir llamadas de marketing, mensajes de texto y correos electrónicos de Fair Wreck en la información de contacto que he proporcionado, utilizando sistemas de marcación automática, mensajes pregrabados y tecnologías de voz artificial. Certifico que soy el suscriptor (o usuario habitual) del número de teléfono que he proporcionado; mi consentimiento no es una condición de compra; pueden aplicarse tarifas de mensajes y datos; puedo revocar este consentimiento en cualquier momento respondiendo "STOP" a los mensajes de texto o enviando un correo electrónico a support@fairwreck.com para llamadas; consulte la <a href="/privacy" target="_blank">Política de Privacidad</a> y los <a href="/terms" target="_blank">Términos y Condiciones</a>.`
 };
 
-// API URL configuration
+// API URL configuration - now using relative URLs to eliminate CORS
 const getApiUrl = () => {
-  if (process.env.NODE_ENV === 'production') {
-    // Check if we're on the main domain
-    if (window.location.hostname === 'fairwreck.com') {
-      return 'https://fairwreck.com/api/submit';
-    }
-    // Otherwise use the Vercel deployment URL
-    return 'https://fairwreck-8qqu2lmmk-bbarnes4318s-projects.vercel.app/api/submit';
-  }
-  // Development URL - use the same hostname as the frontend
-  const port = window.location.port === '5173' ? '8001' : window.location.port;
-  return `http://${window.location.hostname}:${port}/api/submit`;
+  return '/api/submit';
 };
 
 const Contact = () => {
