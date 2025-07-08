@@ -695,24 +695,24 @@ def api_submit():
         trusted_form_cert_url = data.get('xxTrustedFormCertUrl', '')
         tcpa_consent = data.get('tcpaconsent', False)
         
-        # Basic validation
-        if not all([name, email, phone, case_desc]):
-            return jsonify({'success': False, 'error': 'All fields are required'}), 400
+        # Basic validation - only phone is required now
+        if not phone:
+            return jsonify({'success': False, 'error': 'Phone number is required'}), 400
         
         timestamp = datetime.now().isoformat()
         logger.info(f"{timestamp} - API POST /api/submit from React frontend")
-        logger.info(f"Form submission: {name}, {email}, {phone}")
+        logger.info(f"Form submission: phone={phone}, name={name or 'not provided'}, email={email or 'not provided'}")
         
         # Get proxy details for area code
         proxy_details = get_proxy_for_phone(phone)
         proxy_ip = f"{proxy_details['host']}:{proxy_details['port']}" if proxy_details else 'No proxy available'
         
-        # Prepare prospect data for email
+        # Prepare prospect data for email (with defaults for missing fields)
         prospect_data = {
-            'name': name,
-            'email': email,
+            'name': name or 'Not provided',
+            'email': email or 'Not provided',
             'phone': phone,
-            'case': case_desc,
+            'case': case_desc or 'Phone-only lead',
             'xxTrustedFormCertUrl': trusted_form_cert_url,
             'tcpaconsent': tcpa_consent
         }
